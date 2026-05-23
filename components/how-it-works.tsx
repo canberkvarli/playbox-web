@@ -50,9 +50,9 @@ export function HowItWorks() {
 
 export function SectionKicker({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3">
-      <span className="block h-px w-10 bg-coral" />
-      <span className="font-display text-xs tracking-[0.3em] text-coral">{children}</span>
+    <div className="flex items-center gap-4">
+      <span className="block h-px w-12 bg-coral" />
+      <span className="font-display text-base md:text-lg tracking-[0.28em] text-coral">{children}</span>
     </div>
   );
 }

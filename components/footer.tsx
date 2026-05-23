@@ -14,8 +14,8 @@ export function Footer() {
         </div>
         <div className="flex flex-col md:items-end gap-4 text-sm">
           <span className="font-display text-xs tracking-[0.2em] text-paper/50">{t.footer.contact}</span>
-          <a href="mailto:hello@playbox.com.tr" className="text-paper hover:text-coral transition-colors">
-            hello@playbox.com.tr
+          <a href="mailto:canberkvarli@gmail.com" className="text-paper hover:text-coral transition-colors">
+            canberkvarli@gmail.com
           </a>
           <LangToggle className="mt-2" />
         </div>

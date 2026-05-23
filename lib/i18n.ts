@@ -34,12 +34,13 @@ export const dict = {
         { emoji: "🏀", name: "BASKETBOL", gear: "Top + el bandı" },
         { emoji: "⚽", name: "FUTBOL", gear: "Top + dizlik" },
         { emoji: "🎾", name: "TENİS", gear: "Raket + top tüpü" },
-        { emoji: "✨", name: "YAKINDA DAHA FAZLASI", gear: "Voleybol, paddle, daha fazlası" },
+        { emoji: "🏐", name: "VOLEYBOL", gear: "Top + diz desteği" },
+        { emoji: "✨", name: "YAKINDA DAHA FAZLASI", gear: "Paddle, badminton, daha fazlası" },
       ],
     },
     players: {
       kicker: "OYUNCULAR İÇİN",
-      title: "Seri yap. İyi oyna. Tekrar gel.",
+      title: "Aç. Oyna. Devam et.",
       sub: "Playbox uygulaması — istasyonları bul, oyununu başlat, seriyi büyüt.",
       features: [
         "Bluetooth ile saniyeler içinde kapı açılır",
@@ -92,7 +93,7 @@ export const dict = {
         { q: "Uygulama ne zaman çıkıyor?", a: "Beta yazın başında. App Store ve Google Play'de yer alacak." },
         { q: "Partner olmak ne kadar sürer?", a: "Formu doldur, 48 saat içinde dönüş yapıyoruz. Kurulum tipik olarak 2-3 hafta sürer." },
         { q: "Hangi şehirlerdesiniz?", a: "Önce İstanbul. Ardından Ankara ve İzmir. Bekleme listesine girersen şehrine geldiğimizde haber veriyoruz." },
-        { q: "Sorum başka — kime sorarım?", a: "hello@playbox.com.tr adresine mail at, hızlıca dönüyoruz." },
+        { q: "Sorum başka — kime sorarım?", a: "canberkvarli@gmail.com adresine mail at, hızlıca dönüyoruz." },
       ],
     },
     footer: {
@@ -130,12 +131,13 @@ export const dict = {
         { emoji: "🏀", name: "BASKETBALL", gear: "Ball + wristband" },
         { emoji: "⚽", name: "FOOTBALL", gear: "Ball + shin guards" },
         { emoji: "🎾", name: "TENNIS", gear: "Racket + ball tube" },
-        { emoji: "✨", name: "MORE SOON", gear: "Volleyball, padel, and more" },
+        { emoji: "🏐", name: "VOLLEYBALL", gear: "Ball + knee guard" },
+        { emoji: "✨", name: "MORE SOON", gear: "Padel, badminton, and more" },
       ],
     },
     players: {
       kicker: "FOR PLAYERS",
-      title: "Build streaks. Play hard. Come back.",
+      title: "Tap. Play. Repeat.",
       sub: "The Playbox app — find stations, start your session, level up your streak.",
       features: [
         "Bluetooth unlocks the gate in seconds",
@@ -188,7 +190,7 @@ export const dict = {
         { q: "When does the app launch?", a: "Beta drops early summer. Available on App Store and Google Play." },
         { q: "How fast can I become a partner?", a: "Send the form — we reply within 48h. Install typically takes 2–3 weeks." },
         { q: "Which cities are you in?", a: "Istanbul first. Ankara and Izmir next. Join the waitlist for your city." },
-        { q: "Other questions?", a: "Email hello@playbox.com.tr — we're quick." },
+        { q: "Other questions?", a: "Email canberkvarli@gmail.com — we're quick." },
       ],
     },
     footer: {

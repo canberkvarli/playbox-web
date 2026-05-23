@@ -8,7 +8,7 @@ export function LangToggle({ className }: { className?: string }) {
   const opts: Lang[] = ["tr", "en"];
 
   return (
-    <div className={cn("inline-flex items-center font-display text-xs tracking-[0.12em]", className)}>
+    <div className={cn("inline-flex items-center font-display text-base tracking-[0.12em]", className)}>
       {opts.map((l, i) => (
         <span key={l} className="flex items-center">
           <button

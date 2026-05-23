@@ -11,7 +11,7 @@ export function ForPlayers() {
   return (
     <section id="app" className="relative py-28 md:py-40 px-6 border-t border-paper/5 overflow-hidden">
       <div className="mx-auto max-w-[1400px] grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-        <PhoneMockup />
+        <ScreenshotSlot soon={t.players.soon} />
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -56,43 +56,19 @@ function StoreBadge({ icon, label, soon }: { icon: React.ReactNode; label: strin
   );
 }
 
-function PhoneMockup() {
-  const { t } = useI18n();
+function ScreenshotSlot({ soon }: { soon: string }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, rotate: -3 }}
-      whileInView={{ opacity: 1, scale: 1, rotate: -3 }}
+      initial={{ opacity: 0, scale: 0.96 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
+      transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
       className="relative mx-auto w-full max-w-[340px]"
     >
-      <div className="absolute -inset-8 bg-coral/20 blur-3xl rounded-full" />
-      <div className="relative bg-ink-soft border-[10px] border-ink-soft rounded-[44px] shadow-2xl overflow-hidden aspect-[9/19.5]">
-        <div className="absolute top-0 inset-x-0 h-7 bg-ink-soft z-10 flex items-center justify-center">
-          <div className="w-24 h-5 bg-ink rounded-full" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-br from-ink via-ink-soft to-mauve/30 flex flex-col">
-          <div className="flex-1 flex flex-col justify-end p-8 pb-12">
-            <span className="font-display text-xs tracking-[0.25em] text-coral">{t.hero.kicker}</span>
-            <h3 className="mt-3 font-display text-5xl text-paper leading-none">
-              {t.hero.title1}
-              <br />
-              <span className="text-coral">{t.hero.title2.split(" ").pop()}</span>
-            </h3>
-            <div className="mt-8 h-12 rounded-full bg-coral flex items-center justify-center">
-              <span className="font-display text-base text-ink tracking-wider">OYNA</span>
-            </div>
-            <div className="mt-3 h-12 rounded-full border border-paper/20 flex items-center justify-center">
-              <span className="font-display text-base text-paper tracking-wider">İSTASYON BUL</span>
-            </div>
-          </div>
-          <div className="px-8 pb-8">
-            <div className="flex justify-between text-paper/40 font-display text-[10px] tracking-wider">
-              <span>● BAĞLI</span>
-              <span>SERİ · 7 GÜN</span>
-            </div>
-          </div>
-        </div>
+      <div className="absolute -inset-10 bg-coral/15 blur-3xl rounded-full" />
+      <div className="relative border-2 border-dashed border-paper/15 rounded-[44px] aspect-[9/19.5] flex flex-col items-center justify-center gap-3 bg-paper/[0.02]">
+        <span className="block w-2 h-2 rounded-full bg-coral animate-pulse" />
+        <span className="font-display text-xs tracking-[0.3em] text-paper/40">{soon}</span>
       </div>
     </motion.div>
   );

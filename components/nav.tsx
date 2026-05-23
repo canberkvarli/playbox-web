@@ -38,17 +38,17 @@ export function Nav() {
           PLAYBOX
         </a>
 
-        <nav className="hidden md:flex items-center gap-9">
+        <nav className="hidden md:flex items-center gap-10">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="font-display text-sm tracking-[0.12em] text-paper/80 hover:text-coral transition-colors"
+              className="font-display text-lg tracking-[0.1em] text-paper/85 hover:text-coral transition-colors"
             >
               {l.label}
             </a>
           ))}
-          <LangToggle className="ml-2" />
+          <LangToggle className="ml-3" />
         </nav>
 
         <div className="md:hidden flex items-center gap-4">

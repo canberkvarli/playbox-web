@@ -59,7 +59,7 @@ export function Sports() {
                 <div className={cn(
                   "absolute inset-0 transition-transform duration-700 group-hover:scale-105",
                   i % 2 === 0 ? "bg-coral" : "bg-mauve",
-                  i === 3 && "bg-butter"
+                  i === t.sports.items.length - 1 && "bg-butter"
                 )} />
                 <div className={cn(
                   "absolute inset-0 mix-blend-overlay opacity-30",
@@ -67,16 +67,10 @@ export function Sports() {
                 )} />
                 <div className="absolute top-7 left-7 text-7xl md:text-8xl">{s.emoji}</div>
                 <div className="absolute bottom-7 left-7 right-7">
-                  <h3 className={cn(
-                    "font-display text-4xl md:text-5xl lg:text-6xl leading-none",
-                    i === 3 ? "text-ink" : "text-ink"
-                  )}>
+                  <h3 className="font-display text-4xl md:text-5xl lg:text-6xl leading-none text-ink">
                     {s.name}
                   </h3>
-                  <p className={cn(
-                    "mt-3 font-serif italic text-base md:text-lg",
-                    i === 3 ? "text-ink/70" : "text-ink/75"
-                  )}>
+                  <p className="mt-3 font-serif italic text-base md:text-lg text-ink/75">
                     {s.gear}
                   </p>
                 </div>

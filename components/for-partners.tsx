@@ -10,9 +10,9 @@ export function ForPartners() {
   return (
     <section id="partner" className="relative py-28 md:py-40 px-6 bg-butter text-ink">
       <div className="mx-auto max-w-[1400px]">
-        <div className="flex items-center gap-3">
-          <span className="block h-px w-10 bg-coral" />
-          <span className="font-display text-xs tracking-[0.3em] text-coral">{t.partners.kicker}</span>
+        <div className="flex items-center gap-4">
+          <span className="block h-px w-12 bg-coral" />
+          <span className="font-display text-base md:text-lg tracking-[0.28em] text-coral">{t.partners.kicker}</span>
         </div>
 
         <h2 className="mt-5 font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.9] text-ink max-w-5xl balanced">
@@ -45,8 +45,8 @@ export function ForPartners() {
           <div>
             <h3 className="font-serif text-4xl md:text-5xl text-ink balanced">{t.partners.form.title}</h3>
             <p className="mt-4 text-ink/70 text-lg max-w-md">{t.partners.form.sub}</p>
-            <p className="mt-10 font-display text-xs tracking-[0.2em] text-ink/50">
-              hello@playbox.com.tr
+            <p className="mt-10 font-display text-sm tracking-[0.2em] text-ink/60">
+              canberkvarli@gmail.com
             </p>
           </div>
           <PartnerForm />
