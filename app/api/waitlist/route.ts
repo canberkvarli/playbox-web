@@ -4,15 +4,10 @@ import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
-const schema = z.object({
-  name: z.string().min(2).max(80),
-  venueType: z.enum(["cafe", "gym", "park", "school", "hotel", "other"]),
-  email: z.string().email(),
-  message: z.string().max(500).optional(),
-});
+const schema = z.object({ email: z.string().email() });
 
 const buckets = new Map<string, { count: number; reset: number }>();
-const LIMIT = 3;
+const LIMIT = 5;
 const WINDOW_MS = 60 * 60 * 1000;
 
 function rateLimit(ip: string) {
@@ -45,12 +40,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "validation_failed" }, { status: 400 });
   }
 
-  const { name, venueType, email, message } = parsed.data;
+  const { email } = parsed.data;
   const inbox = process.env.PARTNER_INBOX ?? "canberkvarli@gmail.com";
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
-    console.log("[partner-form] no RESEND_API_KEY. would have sent:", parsed.data);
+    console.log("[waitlist] no RESEND_API_KEY. would have added:", email);
     return NextResponse.json({ ok: true, stubbed: true });
   }
 
@@ -58,25 +53,22 @@ export async function POST(req: Request) {
 
   try {
     await resend.emails.send({
-      from: "Playbox Web <partner@playbox.com.tr>",
+      from: "Playbox Web <waitlist@playbox.com.tr>",
       to: inbox,
       replyTo: email,
-      subject: `New partner inquiry from ${name} (${venueType})`,
+      subject: `Waitlist signup: ${email}`,
       html: `
         <div style="font-family:-apple-system,Inter,sans-serif;color:#1a1f3a;line-height:1.6">
-          <h2 style="color:#e87527;margin:0 0 16px">New partner inquiry</h2>
-          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <h2 style="color:#e87527;margin:0 0 16px">New waitlist signup</h2>
           <p><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
-          <p><strong>Venue type:</strong> ${escapeHtml(venueType)}</p>
-          ${message ? `<p><strong>Message:</strong><br/>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>` : ""}
           <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
-          <p style="color:#999;font-size:12px">Sent from playbox.com.tr partner form</p>
+          <p style="color:#999;font-size:12px">Sent from playbox.com.tr waitlist</p>
         </div>
       `,
     });
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("[partner-form] resend error", err);
+    console.error("[waitlist] resend error", err);
     return NextResponse.json({ error: "send_failed" }, { status: 500 });
   }
 }

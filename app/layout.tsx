@@ -29,7 +29,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://playbox-web.vercel.app"),
   title: {
-    default: "Playbox — Oynamaya hazır mısın?",
+    default: "Playbox · Oynamaya hazır mısın?",
     template: "%s · Playbox",
   },
   description:
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   keywords: ["playbox", "spor", "basketbol", "futbol", "tenis", "türkiye", "istanbul"],
   authors: [{ name: "Playbox Türkiye" }],
   openGraph: {
-    title: "Playbox — Oynamaya hazır mısın?",
+    title: "Playbox · Oynamaya hazır mısın?",
     description: "Şehrin her köşesinde, cebinden çıkan bir spor sahası.",
     type: "website",
     locale: "tr_TR",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Playbox — Oynamaya hazır mısın?",
+    title: "Playbox · Oynamaya hazır mısın?",
     description: "Şehrin her köşesinde, cebinden çıkan bir spor sahası.",
   },
   icons: { icon: "/favicon.ico" },

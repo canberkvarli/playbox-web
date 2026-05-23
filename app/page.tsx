@@ -5,6 +5,7 @@ import { Sports } from "@/components/sports";
 import { ForPlayers } from "@/components/for-players";
 import { ForPartners } from "@/components/for-partners";
 import { FAQ } from "@/components/faq";
+import { Waitlist } from "@/components/waitlist";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         <ForPlayers />
         <ForPartners />
         <FAQ />
+        <Waitlist />
       </main>
       <Footer />
     </>
