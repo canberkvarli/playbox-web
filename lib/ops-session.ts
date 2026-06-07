@@ -7,6 +7,7 @@ import {
   constantTimeEqualHex,
   sessionExp,
   signSession,
+  verifySession,
 } from "@/lib/ops-auth";
 
 const COOKIE = "ops_session";
@@ -74,6 +75,24 @@ export async function createOpsSession(): Promise<void> {
     path: "/",
     maxAge: OPS_SESSION_TTL_SEC,
   });
+}
+
+/**
+ * Defense-in-depth gate for server actions.
+ *
+ * Re-verifies the ops session *inside* mutating actions rather than trusting
+ * the `/ops/:path*` middleware matcher alone — so the actions stay safe even if
+ * the matcher changes or is bypassed. Mirrors the middleware check; throws
+ * `unauthorized` on any invalid/missing/expired session.
+ */
+export async function assertOpsSession(): Promise<void> {
+  const token = (await cookies()).get(OPS_COOKIE)?.value;
+  const { valid } = await verifySession(
+    opsSecret(),
+    token,
+    Math.floor(Date.now() / 1000),
+  );
+  if (!valid) throw new Error("unauthorized");
 }
 
 /** Remove the session cookie. */
