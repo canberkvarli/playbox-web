@@ -38,3 +38,53 @@
 
 ## Done when
 Service-role server-only; signed-cookie auth (tested) gates /ops/*; attention-queue + station-health + dispute-timeline pages render from op_*; mark/resolve/unquarantine actions work; README documents env + the op_* dependency.
+
+## Running it
+
+### Environment
+
+All of these are **server-only** — none are prefixed `NEXT_PUBLIC_` and none must
+ever reach the browser. Put them in `.env.local` (gitignored):
+
+| Var | Purpose |
+| --- | --- |
+| `SUPABASE_URL` | Supabase project URL. |
+| `SUPABASE_SERVICE_ROLE_KEY` | **Service-role** key. Used only by `lib/supabase-admin.ts` (which is `import "server-only"`) to invoke the `op_*` functions. Never expose this. |
+| `OPS_PASSWORD` | Shared operator login password (checked constant-time at `/ops/login`). |
+| `OPS_SESSION_SECRET` | HMAC secret for the signed session cookie. Must be **≥ 32 chars**. |
+
+### Steps
+
+```bash
+npm install
+npm test          # vitest (auth/session unit tests)
+npm run dev       # then open http://localhost:3000/ops/login
+```
+
+Log in with `OPS_PASSWORD`; the nav links to **Sıra** (`/ops`, attention queue)
+and **İstasyonlar** (`/ops/stations`). Click a queue row to reach
+`/ops/reservation/<id>` for the dispute timeline + support actions.
+
+### HARD dependency: the `op_*` Postgres functions
+
+Every ops page calls a Phase-4 `op_*` function (`op_attention_queue`,
+`op_station_health`, `op_dispute_timeline`, `op_mark_disputed`,
+`op_resolve_dispute`, `op_unquarantine`) over the service-role client. These
+**must already be deployed** (SECURITY DEFINER, `GRANT`ed to `service_role`) to
+the Supabase project named by `SUPABASE_URL`. If they are missing, every page
+renders its error Card (`function ... does not exist`) instead of data — the web
+app does not create them.
+
+### Shared-password caveat
+
+Auth is a single shared `OPS_PASSWORD`, and every support action is attributed to
+the constant `p_admin = 'ops-console'`. There is **no per-operator audit trail**:
+the `op_*` audit log cannot tell which human acted. Upgrade path: introduce
+per-operator credentials (or SSO) and thread the real operator identity through
+as `p_admin` so `op_mark_disputed` / `op_resolve_dispute` / `op_unquarantine`
+record who did what.
+
+### Coming soon
+
+Once the photo-lostgear branch merges and `op_gear_reports` ships, add a
+lost-gear reports panel to the reservation detail page.
