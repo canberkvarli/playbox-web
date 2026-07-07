@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
 import { BounceMark, Wordmark } from "@/components/logo";
 
@@ -43,9 +44,17 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-slate pt-6 font-mono text-[11px] uppercase tracking-widest text-muted sm:flex-row sm:items-center">
           <span>{t.footer.legal}</span>
-          <a href="#" className="transition-colors hover:text-concrete">
-            {t.footer.kvkk}
-          </a>
+          <div className="flex flex-wrap gap-5">
+            <Link href="/kvkk" className="transition-colors hover:text-concrete">
+              {t.footer.kvkk}
+            </Link>
+            <Link href="/privacy" className="transition-colors hover:text-concrete">
+              {t.footer.privacy}
+            </Link>
+            <Link href="/terms" className="transition-colors hover:text-concrete">
+              {t.footer.terms}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

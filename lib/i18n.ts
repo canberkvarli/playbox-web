@@ -116,6 +116,8 @@ export const dict = {
       contact: "İletişim",
       legal: "© 2026 Playbox Türkiye. Tüm hakları saklıdır.",
       kvkk: "KVKK",
+      privacy: "Gizlilik",
+      terms: "Koşullar",
     },
   },
   en: {
@@ -228,7 +230,9 @@ export const dict = {
       city: "COMING TO TÜRKIYE · ISTANBUL FIRST",
       contact: "Contact",
       legal: "© 2026 Playbox Türkiye. All rights reserved.",
-      kvkk: "Privacy",
+      kvkk: "KVKK",
+      privacy: "Privacy",
+      terms: "Terms",
     },
   },
 };
