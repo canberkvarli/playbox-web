@@ -25,9 +25,9 @@ Pages follow the site's existing TR/EN toggle (client i18n context, localStorage
 
 Marked in the content as `[KÖŞELİ PARANTEZ]` / `[BRACKETS]`:
 
-- Company legal name + address (once incorporated) — the "veri sorumlusu"
-- Payment provider name (e.g. iyzico)
-- Analytics/crash-reporting provider (e.g. Firebase)
+- Full legal name + address once incorporated (planned name: **Playbox Sport**) — the "veri sorumlusu"
+
+Already filled in: payment provider is **iyzico**, analytics/crash reporting is **Google Firebase** (Analytics + Crashlytics).
 
 ## Note
 

@@ -17,8 +17,8 @@ export type LegalDocKey = "kvkk" | "privacy" | "terms";
 
 export const CONTACT_EMAIL = "canberkvarli@gmail.com";
 
-// [KÖŞELİ PARANTEZ] içindeki alanlar şirket kuruluşu tamamlandığında ve
-// tedarikçiler (ödeme kuruluşu, analitik sağlayıcı) netleştiğinde güncellenmelidir.
+// [KÖŞELİ PARANTEZ] içindeki alan (tam ticari unvan + adres) şirket kuruluşu
+// tamamlandığında güncellenmelidir.
 export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
   kvkk: {
     tr: {
@@ -30,7 +30,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
         {
           h: "1. Veri Sorumlusu",
           body: [
-            "Veri sorumlusu: [ŞİRKET UNVANI — şirket kuruluşu tamamlandığında güncellenecektir], [ADRES].",
+            "Veri sorumlusu: Playbox Sport [tam ticari unvan ve adres, şirket kuruluşu tamamlandığında eklenecektir].",
             `İletişim: ${CONTACT_EMAIL}`,
           ],
         },
@@ -41,7 +41,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
             "- Kimlik bilgileri: ad, soyad",
             "- İletişim bilgileri: e-posta adresi, telefon numarası",
             "- Konum bilgisi: yakınınızdaki istasyonları gösterebilmek için cihaz konumunuz (yalnızca izin vermeniz hâlinde)",
-            "- Finansal bilgiler: ödeme işlemi kayıtları; kart bilgileriniz tarafımızca saklanmaz, [ÖDEME KURULUŞU — örn. iyzico] tarafından işlenir",
+            "- Finansal bilgiler: ödeme işlemi kayıtları; kart bilgileriniz tarafımızca saklanmaz, iyzico tarafından işlenir",
             "- İşlem güvenliği bilgileri: IP adresi, cihaz kimliği, uygulama giriş kayıtları",
             "- Kullanım verileri: uygulama içi etkileşimler, çökme raporları ve analitik veriler",
             "- Web sitesi formları: bekleme listesi için e-posta adresiniz; sponsorluk formu için ad, şirket, e-posta ve mesajınız",
@@ -75,8 +75,8 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "Kişisel verileriniz, yalnızca yukarıdaki amaçlarla sınırlı olmak üzere aşağıdaki taraflara aktarılabilir:",
             "- Barındırma ve altyapı sağlayıcıları (ör. Vercel)",
-            "- Ödeme hizmeti sağlayıcısı: [ÖDEME KURULUŞU]",
-            "- Analitik ve çökme raporlama sağlayıcıları: [ANALİTİK SAĞLAYICI — örn. Firebase]",
+            "- Ödeme hizmeti sağlayıcısı: iyzico (iyzi Ödeme ve Elektronik Para Hizmetleri A.Ş.)",
+            "- Analitik ve çökme raporlama sağlayıcısı: Google Firebase (Analytics ve Crashlytics)",
             "- Yetkili kamu kurum ve kuruluşları (yasal zorunluluk hâlinde)",
             "Altyapı sağlayıcılarımızın sunucuları yurt dışında bulunabilir; bu durumda aktarım KVKK'nın 9. maddesine uygun olarak gerçekleştirilir.",
           ],
@@ -111,7 +111,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
         {
           h: "1. Data Controller",
           body: [
-            "Data controller: [COMPANY NAME — to be updated once incorporation is complete], [ADDRESS].",
+            "Data controller: Playbox Sport [full legal name and address to be added once incorporation is complete].",
             `Contact: ${CONTACT_EMAIL}`,
           ],
         },
@@ -122,7 +122,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
             "- Identity: first and last name",
             "- Contact: email address, phone number",
             "- Location: your device location to show nearby stations (only with your permission)",
-            "- Financial: payment transaction records; your card details are not stored by us and are processed by [PAYMENT PROVIDER — e.g. iyzico]",
+            "- Financial: payment transaction records; your card details are not stored by us and are processed by iyzico",
             "- Security: IP address, device identifier, sign-in logs",
             "- Usage: in-app interactions, crash reports and analytics data",
             "- Website forms: your email for the waitlist; name, company, email and message for the sponsorship form",
@@ -156,8 +156,8 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "Your personal data may be shared, strictly for the purposes above, with:",
             "- Hosting and infrastructure providers (e.g. Vercel)",
-            "- Payment provider: [PAYMENT PROVIDER]",
-            "- Analytics and crash-reporting providers: [ANALYTICS PROVIDER — e.g. Firebase]",
+            "- Payment provider: iyzico (iyzi Ödeme ve Elektronik Para Hizmetleri A.Ş.)",
+            "- Analytics and crash-reporting provider: Google Firebase (Analytics and Crashlytics)",
             "- Competent public authorities where legally required",
             "Our infrastructure providers may host data abroad; any such transfer is carried out in accordance with Article 9 of the KVKK.",
           ],
@@ -197,7 +197,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "- Hesap bilgileri: ad, soyad, e-posta, telefon numarası",
             "- Konum: yakınınızdaki Playbox istasyonlarını göstermek için (yalnızca izninizle; izni cihaz ayarlarından istediğiniz an kapatabilirsiniz)",
-            "- Ödeme bilgileri: ödemeler [ÖDEME KURULUŞU] üzerinden işlenir; kart bilgileriniz sunucularımızda saklanmaz",
+            "- Ödeme bilgileri: ödemeler iyzico üzerinden işlenir; kart bilgileriniz sunucularımızda saklanmaz",
             "- Kullanım ve cihaz verileri: uygulama etkileşimleri, çökme raporları, cihaz modeli, işletim sistemi, IP adresi",
             "- Web sitesi: bekleme listesi e-postanız, sponsorluk formu bilgileriniz ve dil tercihiniz (tarayıcınızda yerel olarak saklanır)",
           ],
@@ -217,8 +217,8 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "Verilerinizi satmayız. Yalnızca hizmetin çalışması için gereken sağlayıcılarla paylaşırız:",
             "- Barındırma: Vercel (web sitesi ve API altyapısı)",
-            "- Ödeme: [ÖDEME KURULUŞU]",
-            "- Analitik ve çökme raporları: [ANALİTİK SAĞLAYICI]",
+            "- Ödeme: iyzico",
+            "- Analitik ve çökme raporları: Google Firebase",
             "- E-posta iletimi: bekleme listesi ve form yanıtları için e-posta hizmet sağlayıcımız",
             "Yasal bir zorunluluk hâlinde yetkili mercilerle paylaşım yapılabilir.",
           ],
@@ -268,7 +268,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "- Account: first and last name, email, phone number",
             "- Location: to show nearby Playbox stations (only with your permission; you can revoke it any time in device settings)",
-            "- Payments: processed by [PAYMENT PROVIDER]; your card details are never stored on our servers",
+            "- Payments: processed by iyzico; your card details are never stored on our servers",
             "- Usage and device data: in-app interactions, crash reports, device model, OS, IP address",
             "- Website: your waitlist email, sponsorship form details, and your language preference (stored locally in your browser)",
           ],
@@ -288,8 +288,8 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "We do not sell your data. We share it only with providers needed to run the Service:",
             "- Hosting: Vercel (website and API infrastructure)",
-            "- Payments: [PAYMENT PROVIDER]",
-            "- Analytics and crash reporting: [ANALYTICS PROVIDER]",
+            "- Payments: iyzico",
+            "- Analytics and crash reporting: Google Firebase",
             "- Email delivery: our email provider, for waitlist and form responses",
             "We may disclose data to competent authorities where legally required.",
           ],
@@ -364,7 +364,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           h: "4. Ücretler ve Ödeme",
           body: [
             "- Kiralama ücretleri, oturum başlamadan önce uygulamada gösterilir.",
-            "- Ödemeler, kayıtlı ödeme yönteminizden [ÖDEME KURULUŞU] aracılığıyla tahsil edilir.",
+            "- Ödemeler, kayıtlı ödeme yönteminizden iyzico aracılığıyla tahsil edilir.",
             "- Depozito uygulanması hâlinde tutar ve iade koşulları uygulamada belirtilir.",
             "- Cayma hakkı ve iade koşulları, mesafeli sözleşmelere ilişkin mevzuata tabidir; hizmet ifasına başlanmış oturumlar için iade yapılmayabilir.",
           ],
@@ -445,7 +445,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           h: "4. Fees and Payment",
           body: [
             "- Rental fees are shown in the app before a session starts.",
-            "- Payments are collected from your saved payment method via [PAYMENT PROVIDER].",
+            "- Payments are collected from your saved payment method via iyzico.",
             "- If a deposit applies, its amount and refund conditions are stated in the app.",
             "- Withdrawal and refund rights are subject to distance-contract regulations; sessions already started may not be refundable.",
           ],
