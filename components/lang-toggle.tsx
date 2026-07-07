@@ -8,21 +8,25 @@ export function LangToggle({ className }: { className?: string }) {
   const opts: Lang[] = ["tr", "en"];
 
   return (
-    <div className={cn("inline-flex items-center font-display text-base tracking-[0.12em]", className)}>
-      {opts.map((l, i) => (
-        <span key={l} className="flex items-center">
-          <button
-            onClick={() => setLang(l)}
-            className={cn(
-              "px-1.5 py-0.5 transition-colors",
-              lang === l ? "text-coral" : "text-paper/40 hover:text-paper"
-            )}
-            aria-label={`Switch to ${l.toUpperCase()}`}
-          >
-            {l.toUpperCase()}
-          </button>
-          {i === 0 && <span className="text-paper/20">/</span>}
-        </span>
+    <div
+      className={cn(
+        "inline-flex items-center gap-0.5 rounded-full border border-slate/80 bg-card/60 p-0.5 font-mono text-[11px] font-medium backdrop-blur-md",
+        className
+      )}
+    >
+      {opts.map((l) => (
+        <button
+          key={l}
+          onClick={() => setLang(l)}
+          className={cn(
+            "rounded-full px-2.5 py-1 tracking-widest transition-colors duration-300",
+            lang === l ? "bg-volt text-asphalt" : "text-muted hover:text-concrete"
+          )}
+          aria-label={`Switch to ${l.toUpperCase()}`}
+          aria-pressed={lang === l}
+        >
+          {l.toUpperCase()}
+        </button>
       ))}
     </div>
   );

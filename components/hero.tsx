@@ -2,23 +2,37 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ArrowDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Magnetic } from "@/components/magnetic-button";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useI18n } from "@/lib/i18n";
+import { Magnetic } from "@/components/magnetic-button";
+import { BounceMark } from "@/components/logo";
+import { useFinePointer, useReducedMotion } from "@/lib/hooks";
 
 export function Hero() {
   const { t } = useI18n();
   const rootRef = useRef<HTMLElement>(null);
+  const fine = useFinePointer();
+  const reduced = useReducedMotion();
+
+  // mouse parallax
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 60, damping: 20 });
+  const sy = useSpring(my, { stiffness: 60, damping: 20 });
+  const markX = useTransform(sx, (v) => v * 40);
+  const markY = useTransform(sy, (v) => v * 40);
+  const markRot = useTransform(sx, (v) => v * 14);
+  const glowX = useTransform(sx, (v) => v * -60);
+  const glowY = useTransform(sy, (v) => v * -60);
 
   useEffect(() => {
+    if (reduced) return;
     const ctx = gsap.context(() => {
       gsap.from("[data-hero-char]", {
-        y: "100%",
-        opacity: 0,
-        duration: 0.9,
+        yPercent: 115,
+        duration: 1,
         ease: "expo.out",
-        stagger: 0.04,
+        stagger: 0.035,
         delay: 0.15,
       });
       gsap.from("[data-hero-fade]", {
@@ -26,17 +40,33 @@ export function Hero() {
         opacity: 0,
         duration: 0.8,
         ease: "expo.out",
-        stagger: 0.12,
-        delay: 0.7,
+        stagger: 0.1,
+        delay: 0.75,
+      });
+      gsap.from("[data-hero-box]", {
+        scale: 0.4,
+        opacity: 0,
+        rotate: -40,
+        duration: 1.2,
+        ease: "expo.out",
+        delay: 0.1,
       });
     }, rootRef);
     return () => ctx.revert();
-  }, [t.hero.title1, t.hero.title2]);
+  }, [reduced, t.hero.title1, t.hero.title2]);
 
-  const splitChars = (text: string) =>
+  function onMove(e: React.MouseEvent) {
+    if (!fine) return;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    mx.set((e.clientX / w - 0.5) * 2);
+    my.set((e.clientY / h - 0.5) * 2);
+  }
+
+  const chars = (text: string, volt = false) =>
     Array.from(text).map((ch, i) => (
       <span key={`${text}-${i}`} className="inline-block overflow-hidden align-bottom">
-        <span data-hero-char className="inline-block">
+        <span data-hero-char className={`inline-block ${volt ? "text-volt text-glow" : ""}`}>
           {ch === " " ? " " : ch}
         </span>
       </span>
@@ -44,58 +74,106 @@ export function Hero() {
 
   return (
     <section
+      id="top"
       ref={rootRef}
-      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-24 pb-16"
+      onMouseMove={onMove}
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pt-28 pb-20"
     >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-1/4 -left-1/4 w-[80vw] h-[80vw] rounded-full bg-coral/25 blur-[120px] breathe" />
-        <div className="absolute -bottom-1/4 -right-1/4 w-[60vw] h-[60vw] rounded-full bg-mauve/20 blur-[140px] breathe" style={{ animationDelay: "-7s" }} />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#1a1f3a_85%)]" />
+      {/* court-line grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.4]"
+        style={{
+          backgroundImage:
+            "linear-gradient(var(--color-slate) 1px, transparent 1px), linear-gradient(90deg, var(--color-slate) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+          maskImage: "radial-gradient(ellipse at center, black 20%, transparent 72%)",
+        }}
+      />
+      {/* ambient glow */}
+      <motion.div
+        style={{ x: glowX, y: glowY }}
+        className="pointer-events-none absolute -left-1/4 top-1/4 h-[70vw] w-[70vw] rounded-full bg-volt/10 blur-[130px]"
+      />
+      <motion.div
+        style={{ x: glowY, y: glowX }}
+        className="pointer-events-none absolute -right-1/4 bottom-0 h-[55vw] w-[55vw] rounded-full bg-coral/10 blur-[140px]"
+      />
+
+      {/* floating bounce mark */}
+      <motion.div
+        data-hero-box
+        style={{ x: markX, y: markY, rotate: markRot }}
+        className="pointer-events-none absolute left-1/2 top-1/2 -z-0 -translate-x-1/2 -translate-y-1/2"
+      >
+        <BounceMark size={520} mono className="text-slate/40" />
+      </motion.div>
+
+      {/* kicker */}
+      <div data-hero-fade className="absolute top-24 left-1/2 flex -translate-x-1/2 items-center gap-2.5 md:top-28">
+        <span className="block h-1.5 w-1.5 animate-pulse rounded-full bg-volt" />
+        <span className="font-mono text-[11px] tracking-[0.35em] text-muted">{t.hero.kicker}</span>
       </div>
 
-      <div className="absolute top-24 md:top-28 left-1/2 -translate-x-1/2 flex items-center gap-3" data-hero-fade>
-        <span className="block w-2 h-2 rounded-full bg-coral animate-pulse" />
-        <span className="font-display text-xs tracking-[0.3em] text-paper/60">{t.hero.kicker}</span>
-      </div>
-
-      <div className="relative z-10 px-6 text-center max-w-[1500px] mx-auto">
-        <h1 className="font-display text-paper leading-[0.85] text-[18vw] md:text-[15vw] lg:text-[13rem] xl:text-[16rem]">
-          <span className="block">{splitChars(t.hero.title1)}</span>
-          <span className="block">
-            {splitChars(t.hero.title2.split(" ")[0])}{" "}
-            <span className="text-coral">{splitChars(t.hero.title2.split(" ").slice(1).join(" "))}</span>
-          </span>
+      <div className="relative z-10 mx-auto max-w-[1500px] px-6 text-center">
+        <h1 className="font-display whitespace-nowrap text-[13.5vw] leading-[0.86] text-concrete sm:text-[15vw] lg:text-[12rem] xl:text-[14rem]">
+          <span className="block">{chars(t.hero.title1)}</span>
+          <span className="block">{chars(t.hero.title2, true)}</span>
         </h1>
 
         <p
           data-hero-fade
-          className="mt-10 md:mt-14 max-w-2xl mx-auto font-serif italic text-xl md:text-2xl lg:text-3xl text-paper/85 leading-snug balanced"
+          className="balanced mx-auto mt-10 max-w-xl text-base leading-relaxed text-muted md:mt-12 md:text-lg"
         >
           {t.hero.sub}
         </p>
 
-        <div data-hero-fade className="mt-12 md:mt-14 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-          <Magnetic>
-            <Button asChild size="xl" variant="coral">
-              <a href="#app">{t.hero.ctaApp}</a>
-            </Button>
+        <div data-hero-fade className="mt-11 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
+          <Magnetic strength={0.4}>
+            <a
+              href="#waitlist"
+              className="group flex items-center gap-2 rounded-full bg-volt px-7 py-3.5 font-mono text-sm font-bold uppercase tracking-widest text-asphalt transition-shadow hover:glow-volt"
+            >
+              {t.hero.ctaApp}
+              <span className="rounded-full bg-asphalt px-2 py-0.5 text-[10px] text-volt">{t.hero.soon}</span>
+            </a>
           </Magnetic>
-          <Magnetic>
-            <Button asChild size="xl" variant="outline">
-              <a href="#partner">{t.hero.ctaPartner}</a>
-            </Button>
+          <Magnetic strength={0.3}>
+            <a
+              href="#waitlist"
+              className="rounded-full border border-slate px-7 py-3.5 font-mono text-sm font-bold uppercase tracking-widest text-concrete transition-colors hover:border-concrete"
+            >
+              {t.hero.ctaWaitlist}
+            </a>
           </Magnetic>
+        </div>
+
+        {/* stat row */}
+        <div data-hero-fade className="mt-14 flex items-center justify-center gap-8 font-mono text-muted sm:gap-12">
+          <Stat n="4" label={t.hero.statLabel2} />
+          <span className="h-8 w-px bg-slate" />
+          <Stat n="2" label={t.hero.statLabel3} accent />
+          <span className="h-8 w-px bg-slate" />
+          <Stat n="IST" label="2026" />
         </div>
       </div>
 
       <a
         href="#how"
         data-hero-fade
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-paper/60 hover:text-coral transition-colors group"
+        className="group absolute bottom-7 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-muted transition-colors hover:text-volt"
       >
-        <span className="font-display text-[10px] tracking-[0.3em]">{t.hero.scroll}</span>
-        <ArrowDown className="h-4 w-4 group-hover:translate-y-1 transition-transform" />
+        <span className="font-mono text-[10px] uppercase tracking-[0.3em]">{t.hero.scroll}</span>
+        <span className="h-8 w-px animate-pulse bg-current" />
       </a>
     </section>
+  );
+}
+
+function Stat({ n, label, accent }: { n: string; label: string; accent?: boolean }) {
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <span className={`font-display text-2xl leading-none sm:text-3xl ${accent ? "text-volt" : "text-concrete"}`}>{n}</span>
+      <span className="text-[10px] uppercase tracking-widest">{label}</span>
+    </div>
   );
 }

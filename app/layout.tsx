@@ -1,22 +1,19 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Instrument_Serif, Inter } from "next/font/google";
+import localFont from "next/font/local";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { I18nProvider } from "@/lib/i18n";
 import { LenisProvider } from "@/lib/lenis-provider";
 import "./globals.css";
 
-const bebas = Bebas_Neue({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-bebas",
-  display: "swap",
-});
-
-const instrument = Instrument_Serif({
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  variable: "--font-instrument",
+const archivo = localFont({
+  src: [
+    { path: "./fonts/ArchivoExpanded-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/ArchivoExpanded-Bold.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/ArchivoExpanded-ExtraBold.ttf", weight: "800", style: "normal" },
+    { path: "./fonts/ArchivoExpanded-Black.ttf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-archivo",
   display: "swap",
 });
 
@@ -26,35 +23,45 @@ const inter = Inter({
   display: "swap",
 });
 
+const jetbrains = JetBrains_Mono({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://playbox-web.vercel.app"),
+  metadataBase: new URL("https://playbox.com.tr"),
   title: {
-    default: "Playbox · Oynamaya hazır mısın?",
+    default: "Playbox · Bul. Aç. Oyna.",
     template: "%s · Playbox",
   },
   description:
-    "Şehrin her köşesinde, cebinden çıkan bir spor sahası. Türkiye'nin Bluetooth ile açılan spor istasyonları.",
-  keywords: ["playbox", "spor", "basketbol", "futbol", "tenis", "türkiye", "istanbul"],
+    "Sahaların yanında akıllı spor istasyonları. Uygulamadan en yakın Playbox'ı bul, Bluetooth ile aç, ekipmanı al, oyna. Türkiye'nin anlık spor ekipmanı ağı.",
+  keywords: ["playbox", "spor", "ekipman", "basketbol", "futbol", "tenis", "voleybol", "türkiye", "istanbul", "kiralama"],
   authors: [{ name: "Playbox Türkiye" }],
+  alternates: {
+    languages: { "tr-TR": "/", "en-US": "/?lang=en" },
+  },
   openGraph: {
-    title: "Playbox · Oynamaya hazır mısın?",
-    description: "Şehrin her köşesinde, cebinden çıkan bir spor sahası.",
+    title: "Playbox · Bul. Aç. Oyna.",
+    description: "Sahaların yanında akıllı spor istasyonları. Bul, aç, oyna.",
     type: "website",
     locale: "tr_TR",
     alternateLocale: ["en_US"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Playbox · Oynamaya hazır mısın?",
-    description: "Şehrin her köşesinde, cebinden çıkan bir spor sahası.",
+    title: "Playbox · Bul. Aç. Oyna.",
+    description: "Sahaların yanında akıllı spor istasyonları. Bul, aç, oyna.",
   },
   icons: { icon: "/favicon.ico" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr" className={`${bebas.variable} ${instrument.variable} ${inter.variable}`}>
-      <body className="bg-ink text-paper antialiased">
+    <html lang="tr" className={`${archivo.variable} ${inter.variable} ${jetbrains.variable}`}>
+      <body className="grain bg-asphalt text-concrete antialiased">
         <I18nProvider>
           <LenisProvider>
             {children}
@@ -62,10 +69,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               position="bottom-center"
               toastOptions={{
                 style: {
-                  background: "#1a1f3a",
-                  color: "#ffffff",
-                  border: "1px solid #e87527",
-                  fontFamily: "var(--font-inter)",
+                  background: "#202127",
+                  color: "#f4f3ee",
+                  border: "1px solid #d6fb3c",
+                  fontFamily: "var(--font-jetbrains)",
+                  fontSize: "13px",
+                  letterSpacing: "0.02em",
                 },
               }}
             />

@@ -1,65 +1,159 @@
 @import "tailwindcss";
 
+/* ============================================================
+   PLAYBOX — "Asphalt Volt"
+   Floodlit street court at night. Dark-first.
+   One volt action color per screen.
+   ============================================================ */
+
 @theme {
-  --color-paper: #ffffff;
-  --color-ink: #1a1f3a;
-  --color-ink-soft: #232a4a;
-  --color-coral: #e87527;
-  --color-coral-soft: #f08d4a;
-  --color-mauve: #a85a8e;
-  --color-butter: #f5d4b8;
-  --color-butter-soft: #fbe6d2;
+  /* base */
+  --color-asphalt: #17181c; /* primary ground — court asphalt */
+  --color-slate: #2a2c33; /* borders, dividers, inactive */
+  --color-card: #202127; /* raised surface on asphalt */
+  --color-volt: #d6fb3c; /* single primary action */
+  --color-volt-ink: #a9c72e; /* volt-as-text on light surfaces */
+  --color-coral: #ff5c39; /* secondary accent / sport / warmth */
+  --color-concrete: #f4f3ee; /* light surface + text on dark */
+  --color-muted: #9a9aa6; /* secondary text */
 
-  --font-display: var(--font-bebas), "Bebas Neue", "Arial Narrow", sans-serif;
-  --font-serif: var(--font-instrument), "Instrument Serif", Georgia, serif;
+  /* type */
+  --font-display: var(--font-archivo), "Archivo Expanded", "Arial Narrow", sans-serif;
   --font-sans: var(--font-inter), Inter, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
 
-  --tracking-display: -0.02em;
+  --tracking-display: 0.005em;
+
+  /* motion */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-html, body {
-  background: var(--color-ink);
-  color: var(--color-paper);
+html {
+  scroll-behavior: auto;
+  background: var(--color-asphalt);
+}
+
+body {
+  background: var(--color-asphalt);
+  color: var(--color-concrete);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--color-coral);
-  color: var(--color-ink);
+  background: var(--color-volt);
+  color: var(--color-asphalt);
 }
 
+/* ---- display type: Archivo Expanded, uppercase, never tighten ---- */
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: var(--tracking-display);
+  font-weight: 800;
   text-transform: uppercase;
-  line-height: 0.88;
+  letter-spacing: var(--tracking-display);
+  line-height: 0.9;
+}
+.font-mono {
+  font-family: var(--font-mono);
 }
 
-.font-serif-italic {
-  font-family: var(--font-serif);
-  font-style: italic;
+.balanced {
+  text-wrap: balance;
+}
+.pretty {
+  text-wrap: pretty;
 }
 
-.balanced { text-wrap: balance; }
-.pretty { text-wrap: pretty; }
-
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
-
-@keyframes breathe {
-  0%, 100% { transform: translate3d(-10%, -10%, 0) scale(1); opacity: 0.55; }
-  50%      { transform: translate3d(10%,  10%, 0) scale(1.15); opacity: 0.75; }
+/* ---- lenis ---- */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
-.breathe { animation: breathe 14s ease-in-out infinite; }
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
 
+/* ---- decorative grain + court-line texture ---- */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ---- marquee ---- */
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
-.marquee { animation: marquee 28s linear infinite; }
+.marquee {
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+.marquee-fast {
+  animation: marquee 20s linear infinite;
+}
+.marquee-rev {
+  animation-direction: reverse;
+}
 
-.btn-magnetic { transition: transform 240ms cubic-bezier(.2,.8,.2,1); }
+/* ---- volt glow ---- */
+.glow-volt {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-volt) 40%, transparent),
+    0 0 40px -8px color-mix(in srgb, var(--color-volt) 60%, transparent);
+}
+.text-glow {
+  text-shadow: 0 0 32px color-mix(in srgb, var(--color-volt) 45%, transparent);
+}
+
+/* ---- magnetic button ---- */
+.btn-magnetic {
+  transition: transform 300ms var(--ease-out-quint);
+  will-change: transform;
+}
+
+/* ---- kinetic reveal masks (used before GSAP hydrates) ---- */
+.reveal-mask {
+  clip-path: inset(0 0 100% 0);
+}
+
+/* ---- custom cursor ---- */
+@media (pointer: fine) {
+  .cursor-none-fine,
+  .cursor-none-fine * {
+    cursor: none;
+  }
+}
+
+/* ---- reduced motion: kill everything kinetic ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee,
+  .marquee-fast {
+    animation: none !important;
+  }
+}

@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 
 const schema = z.object({
   name: z.string().min(2).max(80),
-  venueType: z.enum(["cafe", "gym", "park", "school", "hotel", "other"]),
+  company: z.string().min(1).max(120),
   email: z.string().email(),
   message: z.string().max(500).optional(),
 });
@@ -45,12 +45,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "validation_failed" }, { status: 400 });
   }
 
-  const { name, venueType, email, message } = parsed.data;
+  const { name, company, email, message } = parsed.data;
   const inbox = process.env.PARTNER_INBOX ?? "canberkvarli@gmail.com";
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
-    console.log("[partner-form] no RESEND_API_KEY. would have sent:", parsed.data);
+    console.log("[sponsor-form] no RESEND_API_KEY. would have sent:", parsed.data);
     return NextResponse.json({ ok: true, stubbed: true });
   }
 
@@ -58,25 +58,25 @@ export async function POST(req: Request) {
 
   try {
     await resend.emails.send({
-      from: "Playbox Web <partner@playbox.com.tr>",
+      from: "Playbox Web <sponsors@playbox.com.tr>",
       to: inbox,
       replyTo: email,
-      subject: `New partner inquiry from ${name} (${venueType})`,
+      subject: `New sponsor inquiry — ${company} (${name})`,
       html: `
-        <div style="font-family:-apple-system,Inter,sans-serif;color:#1a1f3a;line-height:1.6">
-          <h2 style="color:#e87527;margin:0 0 16px">New partner inquiry</h2>
+        <div style="font-family:'JetBrains Mono',-apple-system,monospace;background:#17181c;color:#f4f3ee;padding:32px;line-height:1.6">
+          <h2 style="color:#d6fb3c;margin:0 0 16px;font-family:sans-serif">New sponsor inquiry ⚡</h2>
           <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
-          <p><strong>Venue type:</strong> ${escapeHtml(venueType)}</p>
-          ${message ? `<p><strong>Message:</strong><br/>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>` : ""}
-          <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
-          <p style="color:#999;font-size:12px">Sent from playbox.com.tr partner form</p>
+          <p><strong>Company:</strong> ${escapeHtml(company)}</p>
+          <p><strong>Email:</strong> <a style="color:#d6fb3c" href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
+          ${message ? `<p><strong>Offer / message:</strong><br/>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>` : ""}
+          <hr style="border:none;border-top:1px solid #2a2c33;margin:24px 0"/>
+          <p style="color:#9a9aa6;font-size:12px">Sent from playbox.com.tr sponsors form</p>
         </div>
       `,
     });
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("[partner-form] resend error", err);
+    console.error("[sponsor-form] resend error", err);
     return NextResponse.json({ error: "send_failed" }, { status: 500 });
   }
 }

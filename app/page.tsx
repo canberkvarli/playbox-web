@@ -1,9 +1,11 @@
 import { Nav } from "@/components/nav";
 import { Hero } from "@/components/hero";
+import { Ticker } from "@/components/ticker";
+import { VoltRibbon } from "@/components/volt-ribbon";
 import { HowItWorks } from "@/components/how-it-works";
 import { Sports } from "@/components/sports";
 import { ForPlayers } from "@/components/for-players";
-import { ForPartners } from "@/components/for-partners";
+import { Sponsors } from "@/components/sponsors";
 import { FAQ } from "@/components/faq";
 import { Waitlist } from "@/components/waitlist";
 import { Footer } from "@/components/footer";
@@ -12,14 +14,18 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <main>
-        <Hero />
-        <HowItWorks />
-        <Sports />
-        <ForPlayers />
-        <ForPartners />
-        <FAQ />
-        <Waitlist />
+      <main className="relative">
+        <VoltRibbon />
+        <div className="relative z-10">
+          <Hero />
+          <Ticker />
+          <HowItWorks />
+          <Sports />
+          <ForPlayers />
+          <Sponsors />
+          <FAQ />
+          <Waitlist />
+        </div>
       </main>
       <Footer />
     </>

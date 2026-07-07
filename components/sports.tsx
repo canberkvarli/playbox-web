@@ -1,98 +1,130 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import useEmblaCarousel from "embla-carousel-react";
-import { motion } from "motion/react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useI18n } from "@/lib/i18n";
-import { SectionKicker } from "@/components/how-it-works";
-import { cn } from "@/lib/utils";
+import { Kicker } from "@/components/section-kicker";
+
+if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
+
+const ACCENTS = ["text-volt", "text-coral", "text-volt", "text-coral"];
+const BG = ["bg-volt", "bg-coral", "bg-volt", "bg-coral"];
 
 export function Sports() {
   const { t } = useI18n();
-  const [emblaRef, embla] = useEmblaCarousel({ loop: false, align: "start", containScroll: "trimSnaps" });
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(true);
-
-  const update = useCallback(() => {
-    if (!embla) return;
-    setCanPrev(embla.canScrollPrev());
-    setCanNext(embla.canScrollNext());
-  }, [embla]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!embla) return;
-    update();
-    embla.on("select", update);
-    embla.on("reInit", update);
-  }, [embla, update]);
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+
+    const mm = gsap.matchMedia();
+
+    // desktop: pin + horizontal scrub
+    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      const scrollLen = () => track.scrollWidth - window.innerWidth;
+      const tween = gsap.to(track, {
+        x: () => -scrollLen(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => "+=" + scrollLen(),
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // parallax the giant ghost labels within each panel
+      gsap.utils.toArray<HTMLElement>("[data-ghost]").forEach((el) => {
+        gsap.to(el, {
+          xPercent: -12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => "+=" + scrollLen(),
+            scrub: 1,
+          },
+        });
+      });
+
+      return () => tween.kill();
+    });
+
+    return () => mm.revert();
+  }, [t.sports.items]);
 
   return (
-    <section id="sports" className="relative py-28 md:py-40 px-6 border-t border-paper/5">
-      <div className="mx-auto max-w-[1400px]">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-          <div>
-            <SectionKicker>{t.sports.kicker}</SectionKicker>
-            <h2 className="mt-5 font-serif text-5xl md:text-7xl lg:text-8xl leading-[1.05] max-w-2xl balanced">
-              {t.sports.title}
-            </h2>
-            <p className="mt-6 text-paper/70 text-lg max-w-xl">{t.sports.sub}</p>
-          </div>
-
-          <div className="hidden md:flex gap-3">
-            <ArrowBtn dir="prev" onClick={() => embla?.scrollPrev()} disabled={!canPrev} />
-            <ArrowBtn dir="next" onClick={() => embla?.scrollNext()} disabled={!canNext} />
+    <section id="sports" ref={sectionRef} className="relative overflow-hidden">
+      <div
+        ref={trackRef}
+        className="flex flex-col md:h-[100svh] md:w-max md:flex-row md:flex-nowrap"
+      >
+        {/* intro panel */}
+        <div className="flex shrink-0 flex-col justify-center px-6 py-24 md:h-full md:w-[46vw] md:px-16 md:py-0">
+          <Kicker>{t.sports.kicker}</Kicker>
+          <h2 className="font-display mt-6 text-5xl leading-[0.92] text-concrete sm:text-6xl md:text-7xl">
+            {t.sports.title}
+          </h2>
+          <p className="pretty mt-6 max-w-sm text-[15px] leading-relaxed text-muted">{t.sports.sub}</p>
+          <div className="mt-10 hidden items-center gap-3 font-mono text-[11px] uppercase tracking-widest text-muted md:flex">
+            <span className="h-px w-10 bg-volt" />
+            kaydır / scroll
           </div>
         </div>
 
-        <div className="mt-16 -mx-6 px-6 overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-5">
-            {t.sports.items.map((s, i) => (
-              <motion.article
-                key={s.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.55, delay: i * 0.06, ease: [0.2, 0.8, 0.2, 1] }}
-                className="relative shrink-0 w-[85%] sm:w-[55%] md:w-[42%] lg:w-[31%] aspect-[3/4] overflow-hidden group cursor-pointer"
-              >
-                <div className={cn(
-                  "absolute inset-0 transition-transform duration-700 group-hover:scale-105",
-                  i % 2 === 0 ? "bg-coral" : "bg-mauve",
-                  i === t.sports.items.length - 1 && "bg-butter"
-                )} />
-                <div className={cn(
-                  "absolute inset-0 mix-blend-overlay opacity-30",
-                  "bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.4),transparent_60%)]"
-                )} />
-                <div className="absolute top-7 left-7 text-7xl md:text-8xl">{s.emoji}</div>
-                <div className="absolute bottom-7 left-7 right-7">
-                  <h3 className="font-display text-4xl md:text-5xl lg:text-6xl leading-none text-ink">
-                    {s.name}
-                  </h3>
-                  <p className="mt-3 font-serif italic text-base md:text-lg text-ink/75">
-                    {s.gear}
-                  </p>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+        {/* sport panels */}
+        {t.sports.items.map((s, i) => (
+          <article
+            key={s.name}
+            className="group relative flex shrink-0 flex-col justify-center overflow-hidden border-t border-slate px-6 py-20 md:h-full md:w-[56vw] md:border-l md:border-t-0 md:px-16 md:py-0"
+          >
+            {/* giant ghost sport name */}
+            <span
+              data-ghost
+              className="font-display pointer-events-none absolute -right-4 bottom-2 select-none text-[28vw] leading-none text-card md:bottom-8 md:text-[20vw]"
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+
+            <div className="relative z-10">
+              <div className="flex items-center gap-4">
+                <span className="text-5xl md:text-6xl">{s.emoji}</span>
+                <span className={`font-mono text-xs uppercase tracking-widest ${ACCENTS[i]}`}>
+                  0{i + 1} / 04
+                </span>
+              </div>
+              <h3 className="font-display mt-6 text-[12vw] leading-none text-concrete sm:text-7xl md:text-[6.5rem]">
+                {s.name}
+              </h3>
+              <p className="mt-6 text-lg text-muted">{s.gear}</p>
+              <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-slate bg-card/60 px-4 py-2">
+                <span className={`h-2 w-2 rounded-full ${BG[i]}`} />
+                <span className="font-mono text-[12px] tracking-wider text-concrete/80">{s.tag}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+
+        {/* more soon panel */}
+        <div className="flex shrink-0 flex-col justify-center border-t border-slate px-6 py-24 md:h-full md:w-[42vw] md:border-l md:border-t-0 md:px-16 md:py-0">
+          <span className="text-5xl">✨</span>
+          <p className="font-display mt-6 max-w-xs text-3xl leading-tight text-concrete sm:text-4xl">
+            {t.sports.more}
+          </p>
+          <a
+            href="#waitlist"
+            className="mt-8 inline-flex w-fit rounded-full bg-volt px-6 py-3 font-mono text-[12px] font-bold uppercase tracking-widest text-asphalt transition-shadow hover:glow-volt"
+          >
+            {t.nav.app}
+          </a>
         </div>
       </div>
     </section>
-  );
-}
-
-function ArrowBtn({ dir, onClick, disabled }: { dir: "prev" | "next"; onClick: () => void; disabled?: boolean }) {
-  const Icon = dir === "prev" ? ArrowLeft : ArrowRight;
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      aria-label={dir}
-      className="h-12 w-12 rounded-full border border-paper/20 text-paper hover:border-coral hover:text-coral disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
-    >
-      <Icon className="h-5 w-5" />
-    </button>
   );
 }

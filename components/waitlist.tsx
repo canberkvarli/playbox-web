@@ -1,80 +1,71 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { toast } from "sonner";
-import { ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-
-const schema = z.object({ email: z.string().email() });
-type Values = z.infer<typeof schema>;
+import { Magnetic } from "@/components/magnetic-button";
 
 export function Waitlist() {
   const { t } = useI18n();
-  const [submitting, setSubmitting] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<Values>({ resolver: zodResolver(schema) });
+  const w = t.waitlist;
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending">("idle");
 
-  const onSubmit = async (values: Values) => {
-    setSubmitting(true);
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
     try {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ email }),
       });
       if (!res.ok) throw new Error();
-      toast.success(t.waitlist.success);
-      reset();
+      toast.success(w.success);
+      setEmail("");
     } catch {
-      toast.error(t.waitlist.error);
+      toast.error(w.error);
     } finally {
-      setSubmitting(false);
+      setStatus("idle");
     }
-  };
+  }
 
   return (
-    <section className="relative bg-butter text-ink px-6 py-20 md:py-28 border-t border-ink/10">
-      <div className="mx-auto max-w-3xl text-center">
-        <div className="inline-flex items-center gap-3">
-          <span className="block h-px w-10 bg-coral" />
-          <span className="font-display text-sm md:text-base tracking-[0.28em] text-coral">{t.waitlist.kicker}</span>
-          <span className="block h-px w-10 bg-coral" />
+    <section id="waitlist" className="relative overflow-hidden py-32 md:py-44">
+      {/* volt wash */}
+      <div className="pointer-events-none absolute inset-0 -z-0">
+        <div className="absolute left-1/2 top-1/2 h-[60vw] w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-volt/10 blur-[130px]" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
+        <div className="inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.3em] text-volt">
+          <span className="h-1.5 w-1.5 rounded-full bg-volt" />
+          {w.kicker}
         </div>
-
-        <h2 className="mt-6 font-display text-5xl sm:text-6xl md:text-7xl leading-[0.95] text-ink balanced">
-          {t.waitlist.title}
+        <h2 className="font-display mt-6 text-6xl leading-[0.92] text-concrete sm:text-7xl md:text-8xl">
+          {w.title}
         </h2>
-        <p className="mt-4 font-serif italic text-xl md:text-2xl text-ink/70 balanced">
-          {t.waitlist.sub}
-        </p>
+        <p className="mx-auto mt-6 max-w-md text-base text-muted md:text-lg">{w.sub}</p>
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mt-10 flex flex-col sm:flex-row gap-3 max-w-lg mx-auto"
-        >
+        <form onSubmit={submit} className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row">
           <input
             type="email"
-            autoComplete="email"
-            placeholder={t.waitlist.placeholder}
-            aria-invalid={!!errors.email}
-            {...register("email")}
-            className="flex-1 h-14 px-5 bg-paper border border-ink/15 text-ink placeholder:text-ink/40 focus:outline-none focus:border-coral transition-colors text-base"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={w.placeholder}
+            className="flex-1 rounded-full border border-slate bg-card px-6 py-4 text-sm text-concrete outline-none transition-colors placeholder:text-muted focus:border-volt"
           />
-          <button
-            type="submit"
-            disabled={submitting}
-            className="h-14 px-7 bg-ink text-coral font-display tracking-[0.1em] text-base hover:bg-ink-soft active:scale-[0.98] disabled:opacity-60 transition-all inline-flex items-center justify-center gap-2"
-          >
-            {submitting ? t.waitlist.sending : t.waitlist.submit}
-            {!submitting && <ArrowRight className="h-4 w-4" />}
-          </button>
+          <Magnetic strength={0.3}>
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="w-full rounded-full bg-volt px-7 py-4 font-mono text-[13px] font-bold uppercase tracking-widest text-asphalt transition-shadow hover:glow-volt disabled:opacity-60 sm:w-auto"
+            >
+              {status === "sending" ? w.sending : w.submit}
+            </button>
+          </Magnetic>
         </form>
       </div>
     </section>
