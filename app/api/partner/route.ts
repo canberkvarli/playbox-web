@@ -46,7 +46,10 @@ export async function POST(req: Request) {
   }
 
   const { name, company, email, message } = parsed.data;
-  const inbox = process.env.PARTNER_INBOX ?? "canberkvarli@gmail.com";
+  const inbox = (process.env.PARTNER_INBOX ?? "canberkvarli@gmail.com")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
@@ -57,9 +60,9 @@ export async function POST(req: Request) {
   const resend = new Resend(apiKey);
 
   try {
-    await resend.emails.send({
-      // onboarding@resend.dev works with only an API key (no verified domain).
-      // Once playbox.com.tr is verified in Resend, set MAIL_FROM=Playbox <sponsors@playbox.com.tr>.
+    // MAIL_FROM must use a Resend-verified domain (e.g. actorrise.com) to deliver
+    // to arbitrary recipients. Switch to a playbox.com.tr address once it's verified.
+    const { error } = await resend.emails.send({
       from: process.env.MAIL_FROM ?? "Playbox <onboarding@resend.dev>",
       to: inbox,
       replyTo: email,
@@ -76,6 +79,10 @@ export async function POST(req: Request) {
         </div>
       `,
     });
+    if (error) {
+      console.error("[sponsor-form] resend error", error);
+      return NextResponse.json({ error: "send_failed" }, { status: 500 });
+    }
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[sponsor-form] resend error", err);
