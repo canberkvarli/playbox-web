@@ -26,7 +26,6 @@ export function Nav() {
   const links = [
     { href: "#how", label: t.nav.how },
     { href: "#sports", label: t.nav.sports },
-    { href: "#players", label: t.nav.players },
     { href: "#sponsors", label: t.nav.sponsors },
   ];
 

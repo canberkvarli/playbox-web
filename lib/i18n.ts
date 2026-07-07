@@ -62,12 +62,16 @@ export const dict = {
     sponsors: {
       kicker: "SPONSORLAR",
       title: "OYUNU GÜÇLENDİR.",
-      sub: "Markanı sponsor duvarına koy, oyunculara ücretsiz oyun saatleri hediye et. Herkes kazanır.",
+      lead: "Sponsor değilsin. Oyunun bir parçasısın.",
+      sub: "Markanı sahaya getir, oyunculara ücretsiz oyun saatleri hediye et. Görünürlük sende, hareket onlarda.",
+      benefitsTitle: "Ne kazanırsın?",
       benefits: [
-        { n: "01", t: "Sponsor duvarında yerini al", d: "Logon her istasyonda ve burada, genç ve aktif kitlenin tam önünde." },
-        { n: "02", t: "Ücretsiz saat hediye et", d: "Desteğin oyunculara bedava oyun saatine dönüşür. Sahaya iyilik yap." },
-        { n: "03", t: "Topluluğun parçası ol", d: "Mahallenin sporunu sen ayakta tut. Gerçek, yerel, görünür destek." },
+        { n: "01", t: "Marka görünürlüğü", d: "Logon istasyonlarda, uygulamada ve burada. Genç ve aktif kitlenin tam önünde." },
+        { n: "02", t: "Ücretsiz saat hediye et", d: "Desteğin doğrudan oyunculara bedava oyun saatine dönüşür. Sahaya iyilik yap." },
+        { n: "03", t: "Sıfır uğraş", d: "İstasyonu biz kurar, biz bakarız. Sen sadece etkiyi izle." },
+        { n: "04", t: "Yerel etki", d: "Mahallenin sporunu sen ayakta tut. Gerçek, görünür, ölçülebilir destek." },
       ],
+      closing: "Öncü ol. Farkı sen yarat.",
       wallLabel: "İLK SPONSORLARIMIZ ARASINA GİR",
       wallSoon: "SENİN LOGON BURADA",
       form: {
@@ -171,12 +175,16 @@ export const dict = {
     sponsors: {
       kicker: "SPONSORS",
       title: "POWER THE PLAY.",
-      sub: "Put your brand on the sponsor wall, gift free play hours to players. Everybody wins.",
+      lead: "You're not a sponsor. You're part of the game.",
+      sub: "Bring your brand to the court, gift players free play hours. You get the visibility, they get moving.",
+      benefitsTitle: "What's in it for you?",
       benefits: [
-        { n: "01", t: "Claim your spot on the wall", d: "Your logo at every station and right here, in front of a young, active crowd." },
-        { n: "02", t: "Gift free hours", d: "Your support turns into free play time for players. Do the court a favor." },
-        { n: "03", t: "Join the community", d: "Keep the neighborhood's sport alive. Real, local, visible support." },
+        { n: "01", t: "Brand visibility", d: "Your logo on stations, in the app, and right here. In front of a young, active crowd." },
+        { n: "02", t: "Gift free hours", d: "Your support turns straight into free play time for players. Do the court a favor." },
+        { n: "03", t: "Zero hassle", d: "We install and maintain the stations. You just watch the impact." },
+        { n: "04", t: "Local impact", d: "Keep the neighborhood's sport alive. Real, visible, measurable support." },
       ],
+      closing: "Take the lead. Be the difference.",
       wallLabel: "BE ONE OF OUR FIRST SPONSORS",
       wallSoon: "YOUR LOGO HERE",
       form: {

@@ -4,7 +4,6 @@ import { Ticker } from "@/components/ticker";
 import { VoltRibbon } from "@/components/volt-ribbon";
 import { HowItWorks } from "@/components/how-it-works";
 import { Sports } from "@/components/sports";
-import { ForPlayers } from "@/components/for-players";
 import { Sponsors } from "@/components/sponsors";
 import { FAQ } from "@/components/faq";
 import { Waitlist } from "@/components/waitlist";
@@ -21,7 +20,6 @@ export default function Home() {
           <Ticker />
           <HowItWorks />
           <Sports />
-          <ForPlayers />
           <Sponsors />
           <FAQ />
           <Waitlist />

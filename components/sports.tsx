@@ -102,7 +102,6 @@ export function Sports() {
                 <span className={`font-mono text-xs uppercase tracking-widest ${ACCENTS[i]}`}>0{i + 1} / 04</span>
               </div>
               <h3 className="font-display mt-6 text-[10vw] leading-none text-concrete md:text-[6vw]">{s.name}</h3>
-              <p className="mt-6 text-lg text-muted">{s.gear}</p>
               <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-slate bg-card/60 px-4 py-2">
                 <span className={`h-2 w-2 rounded-full ${BG[i]}`} />
                 <span className="font-mono text-[12px] tracking-wider text-concrete/80">{s.tag}</span>
