@@ -30,18 +30,8 @@ export function Footer() {
             <p className="pretty mt-5 max-w-xs text-sm leading-relaxed text-muted">{t.footer.tag}</p>
           </div>
 
-          <div className="flex flex-col gap-4 sm:items-end">
-            {/* handles not live yet — placeholders, wire real URLs when available */}
-            <div className="flex items-center gap-4 font-mono text-xs uppercase tracking-widest text-muted/70">
-              {["Instagram", "X", "TikTok"].map((s) => (
-                <span key={s} className="cursor-default select-none">
-                  {s}
-                </span>
-              ))}
-              <span className="rounded-full border border-slate px-2 py-0.5 text-[9px] text-volt/80">
-                {t.hero.soon}
-              </span>
-            </div>
+          <div className="flex flex-col gap-2 sm:items-end">
+            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">{t.footer.contact}</span>
             <a
               href="mailto:canberkvarli@gmail.com"
               className="font-mono text-sm text-concrete/80 transition-colors hover:text-volt"

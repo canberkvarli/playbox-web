@@ -5,7 +5,6 @@ import { VoltRibbon } from "@/components/volt-ribbon";
 import { HowItWorks } from "@/components/how-it-works";
 import { Sports } from "@/components/sports";
 import { Sponsors } from "@/components/sponsors";
-import { FAQ } from "@/components/faq";
 import { Waitlist } from "@/components/waitlist";
 import { Footer } from "@/components/footer";
 
@@ -21,7 +20,6 @@ export default function Home() {
           <HowItWorks />
           <Sports />
           <Sponsors />
-          <FAQ />
           <Waitlist />
         </div>
       </main>
