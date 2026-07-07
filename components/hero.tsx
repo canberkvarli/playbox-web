@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useI18n } from "@/lib/i18n";
@@ -115,7 +115,7 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-[1500px] px-6 text-center">
-        <h1 className="font-display whitespace-nowrap text-[13.5vw] leading-[0.86] text-concrete sm:text-[15vw] lg:text-[12rem] xl:text-[14rem]">
+        <h1 className="font-display whitespace-nowrap text-[clamp(2.5rem,13.5vw,14rem)] leading-[0.86] text-concrete">
           <span className="block">{chars(t.hero.title1)}</span>
           <span className="block">{chars(t.hero.title2, true)}</span>
         </h1>
@@ -148,12 +148,13 @@ export function Hero() {
         </div>
 
         {/* stat row */}
-        <div data-hero-fade className="mt-14 flex items-center justify-center gap-8 font-mono text-muted sm:gap-12">
-          <Stat n="4" label={t.hero.statLabel2} />
-          <span className="h-8 w-px bg-slate" />
-          <Stat n="2" label={t.hero.statLabel3} accent />
-          <span className="h-8 w-px bg-slate" />
-          <Stat n="IST" label="2026" />
+        <div data-hero-fade className="mt-14 flex items-center justify-center gap-6 font-mono text-muted sm:gap-10">
+          {t.hero.stats.map((s, i) => (
+            <Fragment key={s.label}>
+              {i > 0 && <span className="h-8 w-px bg-slate" />}
+              <Stat n={s.n} label={s.label} accent={i === 2} />
+            </Fragment>
+          ))}
         </div>
       </div>
 
@@ -172,8 +173,8 @@ export function Hero() {
 function Stat({ n, label, accent }: { n: string; label: string; accent?: boolean }) {
   return (
     <div className="flex flex-col items-center gap-1">
-      <span className={`font-display text-2xl leading-none sm:text-3xl ${accent ? "text-volt" : "text-concrete"}`}>{n}</span>
-      <span className="text-[10px] uppercase tracking-widest">{label}</span>
+      <span className={`font-display text-2xl leading-none sm:text-3xl ${accent ? "text-volt text-glow" : "text-concrete"}`}>{n}</span>
+      <span className="whitespace-nowrap text-[10px] uppercase tracking-widest">{label}</span>
     </div>
   );
 }

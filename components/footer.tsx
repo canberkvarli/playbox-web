@@ -31,16 +31,16 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col gap-4 sm:items-end">
-            <div className="flex gap-5 font-mono text-xs uppercase tracking-widest text-muted">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-volt">
-                Instagram
-              </a>
-              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-volt">
-                X
-              </a>
-              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-volt">
-                TikTok
-              </a>
+            {/* handles not live yet — placeholders, wire real URLs when available */}
+            <div className="flex items-center gap-4 font-mono text-xs uppercase tracking-widest text-muted/70">
+              {["Instagram", "X", "TikTok"].map((s) => (
+                <span key={s} className="cursor-default select-none">
+                  {s}
+                </span>
+              ))}
+              <span className="rounded-full border border-slate px-2 py-0.5 text-[9px] text-volt/80">
+                {t.hero.soon}
+              </span>
             </div>
             <a
               href="mailto:canberkvarli@gmail.com"

@@ -17,9 +17,11 @@ export const dict = {
       ctaWaitlist: "BEKLEME LİSTESİ",
       soon: "yakında",
       scroll: "kaydır",
-      statLabel1: "istasyon",
-      statLabel2: "spor",
-      statLabel3: "saniyede aç",
+      stats: [
+        { n: "4", label: "spor" },
+        { n: "7/24", label: "açık" },
+        { n: "2 sn", label: "bluetooth" },
+      ],
     },
     how: {
       kicker: "NASIL ÇALIŞIR",
@@ -124,9 +126,11 @@ export const dict = {
       ctaWaitlist: "JOIN WAITLIST",
       soon: "soon",
       scroll: "scroll",
-      statLabel1: "stations",
-      statLabel2: "sports",
-      statLabel3: "sec to open",
+      stats: [
+        { n: "4", label: "sports" },
+        { n: "7/24", label: "open" },
+        { n: "2 sec", label: "bluetooth" },
+      ],
     },
     how: {
       kicker: "HOW IT WORKS",
