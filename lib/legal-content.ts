@@ -75,6 +75,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "Kişisel verileriniz, yalnızca yukarıdaki amaçlarla sınırlı olmak üzere aşağıdaki taraflara aktarılabilir:",
             "- Barındırma ve altyapı sağlayıcıları (ör. Vercel)",
+            "- Veri tabanı, kimlik doğrulama ve arka uç hizmetleri: Supabase",
             "- Ödeme hizmeti sağlayıcısı: iyzico (iyzi Ödeme ve Elektronik Para Hizmetleri A.Ş.)",
             "- Analitik ve çökme raporlama sağlayıcısı: Google Firebase (Analytics ve Crashlytics)",
             "- Yetkili kamu kurum ve kuruluşları (yasal zorunluluk hâlinde)",
@@ -156,6 +157,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "Your personal data may be shared, strictly for the purposes above, with:",
             "- Hosting and infrastructure providers (e.g. Vercel)",
+            "- Database, authentication and backend services: Supabase",
             "- Payment provider: iyzico (iyzi Ödeme ve Elektronik Para Hizmetleri A.Ş.)",
             "- Analytics and crash-reporting provider: Google Firebase (Analytics and Crashlytics)",
             "- Competent public authorities where legally required",
@@ -217,6 +219,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "Verilerinizi satmayız. Yalnızca hizmetin çalışması için gereken sağlayıcılarla paylaşırız:",
             "- Barındırma: Vercel (web sitesi ve API altyapısı)",
+            "- Veri tabanı ve kimlik doğrulama: Supabase (hesap ve kiralama verileriniz burada saklanır)",
             "- Ödeme: iyzico",
             "- Analitik ve çökme raporları: Google Firebase",
             "- E-posta iletimi: bekleme listesi ve form yanıtları için e-posta hizmet sağlayıcımız",
@@ -288,6 +291,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
           body: [
             "We do not sell your data. We share it only with providers needed to run the Service:",
             "- Hosting: Vercel (website and API infrastructure)",
+            "- Database and authentication: Supabase (your account and rental data is stored here)",
             "- Payments: iyzico",
             "- Analytics and crash reporting: Google Firebase",
             "- Email delivery: our email provider, for waitlist and form responses",
