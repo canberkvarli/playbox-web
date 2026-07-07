@@ -61,7 +61,7 @@ export async function POST(req: Request) {
 
   try {
     // MAIL_FROM must use a Resend-verified domain (e.g. actorrise.com) to deliver
-    // to arbitrary recipients. Switch to a playbox.com.tr address once it's verified.
+    // to arbitrary recipients. Switch to a playboxsport.com address once it's verified.
     const { error } = await resend.emails.send({
       from: process.env.MAIL_FROM ?? "Playbox <onboarding@resend.dev>",
       to: inbox,
@@ -75,7 +75,7 @@ export async function POST(req: Request) {
           <p><strong>Email:</strong> <a style="color:#d6fb3c" href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
           ${message ? `<p><strong>Offer / message:</strong><br/>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>` : ""}
           <hr style="border:none;border-top:1px solid #2a2c33;margin:24px 0"/>
-          <p style="color:#9a9aa6;font-size:12px">Sent from playbox.com.tr sponsors form</p>
+          <p style="color:#9a9aa6;font-size:12px">Sent from playboxsport.com sponsors form</p>
         </div>
       `,
     });

@@ -31,7 +31,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://playbox.com.tr"),
+  metadataBase: new URL("https://playboxsport.com"),
   title: {
     default: "Playbox · Bul. Aç. Oyna.",
     template: "%s · Playbox",

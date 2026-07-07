@@ -47,7 +47,7 @@ export default async function OG() {
           <span style={{ fontSize: 30, color: "rgba(154,154,166,0.95)", maxWidth: 720 }}>
             Sahaların yanında akıllı spor istasyonları.
           </span>
-          <span style={{ fontSize: 18, color: "rgba(154,154,166,0.6)", letterSpacing: 4 }}>PLAYBOX.COM.TR</span>
+          <span style={{ fontSize: 18, color: "rgba(154,154,166,0.6)", letterSpacing: 4 }}>PLAYBOXSPORT.COM</span>
         </div>
       </div>
     ),
