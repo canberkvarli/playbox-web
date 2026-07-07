@@ -53,7 +53,9 @@ export async function POST(req: Request) {
 
   try {
     await resend.emails.send({
-      from: "Playbox Web <waitlist@playbox.com.tr>",
+      // onboarding@resend.dev works with only an API key (no verified domain).
+      // Once playbox.com.tr is verified in Resend, set MAIL_FROM=Playbox <waitlist@playbox.com.tr>.
+      from: process.env.MAIL_FROM ?? "Playbox <onboarding@resend.dev>",
       to: inbox,
       replyTo: email,
       subject: `Waitlist signup: ${email}`,

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "motion/react";
 import { toast } from "sonner";
 import { useI18n } from "@/lib/i18n";
 import { Magnetic } from "@/components/magnetic-button";
@@ -10,6 +11,7 @@ export function Waitlist() {
   const w = t.waitlist;
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending">("idle");
+  const [done, setDone] = useState(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,6 +26,7 @@ export function Waitlist() {
       if (!res.ok) throw new Error();
       toast.success(w.success);
       setEmail("");
+      setDone(true);
     } catch {
       toast.error(w.error);
     } finally {
@@ -48,25 +51,37 @@ export function Waitlist() {
         </h2>
         <p className="mx-auto mt-6 max-w-md text-base text-muted md:text-lg">{w.sub}</p>
 
-        <form onSubmit={submit} className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={w.placeholder}
-            className="flex-1 rounded-full border border-slate bg-card px-6 py-4 text-sm text-concrete outline-none transition-colors placeholder:text-muted focus:border-volt"
-          />
-          <Magnetic strength={0.3}>
-            <button
-              type="submit"
-              disabled={status === "sending"}
-              className="w-full rounded-full bg-volt px-7 py-4 font-mono text-[13px] font-bold uppercase tracking-widest text-asphalt transition-shadow hover:glow-volt disabled:opacity-60 sm:w-auto"
-            >
-              {status === "sending" ? w.sending : w.submit}
-            </button>
-          </Magnetic>
-        </form>
+        {done ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto mt-10 flex max-w-md items-center justify-center gap-3 rounded-full border border-volt/40 bg-volt/10 px-7 py-4"
+          >
+            <span className="text-lg">⚡</span>
+            <span className="font-mono text-sm tracking-wide text-concrete">{w.success}</span>
+          </motion.div>
+        ) : (
+          <form onSubmit={submit} className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={w.placeholder}
+              className="flex-1 rounded-full border border-slate bg-card px-6 py-4 text-sm text-concrete outline-none transition-colors placeholder:text-muted focus:border-volt"
+            />
+            <Magnetic strength={0.3}>
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full rounded-full bg-volt px-7 py-4 font-mono text-[13px] font-bold uppercase tracking-widest text-asphalt transition-shadow hover:glow-volt disabled:opacity-60 sm:w-auto"
+              >
+                {status === "sending" ? w.sending : w.submit}
+              </button>
+            </Magnetic>
+          </form>
+        )}
       </div>
     </section>
   );

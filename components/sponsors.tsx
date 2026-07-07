@@ -12,6 +12,7 @@ export function Sponsors() {
   const s = t.sponsors;
   const [form, setForm] = useState({ name: "", company: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending">("idle");
+  const [done, setDone] = useState(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,6 +27,7 @@ export function Sponsors() {
       if (!res.ok) throw new Error();
       toast.success(s.form.success);
       setForm({ name: "", company: "", email: "", message: "" });
+      setDone(true);
     } catch {
       toast.error(s.form.error);
     } finally {
@@ -92,6 +94,12 @@ export function Sponsors() {
           </div>
 
           {/* form */}
+          {done ? (
+            <div className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-volt/40 bg-volt/10 p-10 text-center">
+              <span className="text-4xl">⚡</span>
+              <p className="font-display text-2xl text-concrete">{s.form.success}</p>
+            </div>
+          ) : (
           <form onSubmit={submit} className="rounded-3xl border border-slate bg-asphalt p-7 sm:p-9">
             <h3 className="font-display text-3xl text-concrete">{s.form.title}</h3>
             <p className="mt-2 text-sm text-muted">{s.form.sub}</p>
@@ -118,6 +126,7 @@ export function Sponsors() {
               </button>
             </Magnetic>
           </form>
+          )}
         </div>
       </div>
     </section>
