@@ -13,7 +13,7 @@ export function HowItWorks() {
         {/* sticky heading */}
         <div className="md:sticky md:top-32 md:h-fit">
           <Kicker>{t.how.kicker}</Kicker>
-          <h2 className="font-display mt-6 text-4xl leading-[0.95] text-concrete sm:text-5xl">
+          <h2 className="font-display mt-6 text-4xl leading-[1.02] text-concrete sm:text-5xl">
             {t.how.title}
           </h2>
         </div>

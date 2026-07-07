@@ -5,7 +5,6 @@ import gsap from "gsap";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useI18n } from "@/lib/i18n";
 import { Magnetic } from "@/components/magnetic-button";
-import { BounceMark } from "@/components/logo";
 import { useFinePointer, useReducedMotion } from "@/lib/hooks";
 
 export function Hero() {
@@ -14,14 +13,11 @@ export function Hero() {
   const fine = useFinePointer();
   const reduced = useReducedMotion();
 
-  // mouse parallax
+  // mouse parallax (ambient glow only)
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 60, damping: 20 });
   const sy = useSpring(my, { stiffness: 60, damping: 20 });
-  const markX = useTransform(sx, (v) => v * 40);
-  const markY = useTransform(sy, (v) => v * 40);
-  const markRot = useTransform(sx, (v) => v * 14);
   const glowX = useTransform(sx, (v) => v * -60);
   const glowY = useTransform(sy, (v) => v * -60);
 
@@ -41,15 +37,7 @@ export function Hero() {
         duration: 0.8,
         ease: "expo.out",
         stagger: 0.1,
-        delay: 0.75,
-      });
-      gsap.from("[data-hero-box]", {
-        scale: 0.4,
-        opacity: 0,
-        rotate: -40,
-        duration: 1.2,
-        ease: "expo.out",
-        delay: 0.1,
+        delay: 0.6,
       });
     }, rootRef);
     return () => ctx.revert();
@@ -57,16 +45,14 @@ export function Hero() {
 
   function onMove(e: React.MouseEvent) {
     if (!fine) return;
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    mx.set((e.clientX / w - 0.5) * 2);
-    my.set((e.clientY / h - 0.5) * 2);
+    mx.set((e.clientX / window.innerWidth - 0.5) * 2);
+    my.set((e.clientY / window.innerHeight - 0.5) * 2);
   }
 
   const chars = (text: string, volt = false) =>
     Array.from(text).map((ch, i) => (
       <span key={`${text}-${i}`} className="inline-block overflow-hidden align-bottom">
-        <span data-hero-char className={`inline-block ${volt ? "text-volt text-glow" : ""}`}>
+        <span data-hero-char className={`inline-block ${volt ? "text-volt" : ""}`}>
           {ch === " " ? " " : ch}
         </span>
       </span>
@@ -81,7 +67,7 @@ export function Hero() {
     >
       {/* court-line grid */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.4]"
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
         style={{
           backgroundImage:
             "linear-gradient(var(--color-slate) 1px, transparent 1px), linear-gradient(90deg, var(--color-slate) 1px, transparent 1px)",
@@ -92,21 +78,12 @@ export function Hero() {
       {/* ambient glow */}
       <motion.div
         style={{ x: glowX, y: glowY }}
-        className="pointer-events-none absolute -left-1/4 top-1/4 h-[70vw] w-[70vw] rounded-full bg-volt/10 blur-[130px]"
+        className="pointer-events-none absolute -left-1/4 top-1/4 h-[70vw] w-[70vw] rounded-full bg-volt/[0.07] blur-[130px]"
       />
       <motion.div
         style={{ x: glowY, y: glowX }}
-        className="pointer-events-none absolute -right-1/4 bottom-0 h-[55vw] w-[55vw] rounded-full bg-coral/10 blur-[140px]"
+        className="pointer-events-none absolute -right-1/4 bottom-0 h-[55vw] w-[55vw] rounded-full bg-coral/[0.08] blur-[140px]"
       />
-
-      {/* floating bounce mark */}
-      <motion.div
-        data-hero-box
-        style={{ x: markX, y: markY, rotate: markRot }}
-        className="pointer-events-none absolute left-1/2 top-1/2 -z-0 -translate-x-1/2 -translate-y-1/2"
-      >
-        <BounceMark size={520} mono className="text-slate/40" />
-      </motion.div>
 
       {/* kicker */}
       <div data-hero-fade className="absolute top-24 left-1/2 flex -translate-x-1/2 items-center gap-2.5 md:top-28">
@@ -115,14 +92,14 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-[1500px] px-6 text-center">
-        <h1 className="font-display whitespace-nowrap text-[clamp(2.5rem,13.5vw,14rem)] leading-[0.86] text-concrete">
+        <h1 className="font-display whitespace-nowrap text-[clamp(2.25rem,11.5vw,12rem)] leading-[0.98] text-concrete">
           <span className="block">{chars(t.hero.title1)}</span>
           <span className="block">{chars(t.hero.title2, true)}</span>
         </h1>
 
         <p
           data-hero-fade
-          className="balanced mx-auto mt-10 max-w-xl text-base leading-relaxed text-muted md:mt-12 md:text-lg"
+          className="balanced mx-auto mt-9 max-w-xl text-base leading-relaxed text-muted md:mt-11 md:text-lg"
         >
           {t.hero.sub}
         </p>
@@ -173,7 +150,7 @@ export function Hero() {
 function Stat({ n, label, accent }: { n: string; label: string; accent?: boolean }) {
   return (
     <div className="flex flex-col items-center gap-1">
-      <span className={`font-display text-2xl leading-none sm:text-3xl ${accent ? "text-volt text-glow" : "text-concrete"}`}>{n}</span>
+      <span className={`font-display text-2xl leading-none sm:text-3xl ${accent ? "text-volt" : "text-concrete"}`}>{n}</span>
       <span className="whitespace-nowrap text-[10px] uppercase tracking-widest">{label}</span>
     </div>
   );

@@ -41,7 +41,7 @@ export function Sponsors() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-2xl">
           <Kicker>{s.kicker}</Kicker>
-          <h2 className="font-display mt-6 text-5xl leading-[0.95] text-concrete sm:text-6xl md:text-7xl">
+          <h2 className="font-display mt-6 text-5xl leading-[1.02] text-concrete sm:text-6xl md:text-7xl">
             {s.title}
           </h2>
           <p className="pretty mt-6 text-base leading-relaxed text-muted md:text-lg">{s.sub}</p>

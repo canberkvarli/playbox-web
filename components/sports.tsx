@@ -68,7 +68,7 @@ export function Sports() {
         {/* intro panel — holds the full screen first (grace to read it) */}
         <div className={"flex shrink-0 flex-col justify-center px-6 py-24" + md("md:h-full md:w-screen md:px-24 md:py-0")}>
           <Kicker>{t.sports.kicker}</Kicker>
-          <h2 className="font-display mt-6 text-5xl leading-[0.92] text-concrete sm:text-6xl md:text-7xl">
+          <h2 className="font-display mt-6 text-5xl leading-[1.0] text-concrete sm:text-6xl md:text-7xl">
             {t.sports.title}
           </h2>
           <p className="pretty mt-6 max-w-sm text-[15px] leading-relaxed text-muted">{t.sports.sub}</p>
@@ -111,22 +111,24 @@ export function Sports() {
           </article>
         ))}
 
-        {/* more soon panel */}
+        {/* more soon panel — wide so it lingers on the last swipe */}
         <div
           className={
             "flex shrink-0 flex-col justify-center border-t border-slate px-6 py-24" +
-            md("md:h-full md:w-[46vw] md:border-l md:border-t-0 md:px-16 md:py-0")
+            md("md:h-full md:w-[82vw] md:border-l md:border-t-0 md:px-24 md:py-0")
           }
         >
-          <span className="text-5xl">✨</span>
-          <p className="font-display mt-6 max-w-xs text-3xl leading-tight text-concrete sm:text-4xl">{t.sports.more}</p>
+          <span className="text-6xl">✨</span>
+          <p className="font-display mt-6 max-w-xl text-4xl leading-[1.05] text-concrete sm:text-5xl">{t.sports.more}</p>
           <a
             href="#waitlist"
-            className="mt-8 inline-flex w-fit rounded-full bg-volt px-6 py-3 font-mono text-[12px] font-bold uppercase tracking-widest text-asphalt transition-shadow hover:glow-volt"
+            className="mt-9 inline-flex w-fit rounded-full bg-volt px-7 py-3.5 font-mono text-[13px] font-bold uppercase tracking-widest text-asphalt transition-shadow hover:glow-volt"
           >
             {t.nav.app}
           </a>
         </div>
+        {/* trailing runway so the last panel settles before the pin releases */}
+        {horizontal && <div className="shrink-0 md:h-full md:w-[12vw]" aria-hidden />}
       </div>
     </section>
   );

@@ -14,7 +14,7 @@ export function ForPlayers() {
         {/* copy */}
         <div>
           <Kicker>{t.players.kicker}</Kicker>
-          <h2 className="font-display mt-6 text-5xl leading-[0.95] text-concrete sm:text-6xl">
+          <h2 className="font-display mt-6 text-5xl leading-[1.02] text-concrete sm:text-6xl">
             {t.players.title}
           </h2>
           <p className="pretty mt-6 max-w-md text-[15px] leading-relaxed text-muted">{t.players.sub}</p>
@@ -78,8 +78,11 @@ export function ForPlayers() {
               <span className="font-mono text-sm text-coral">7 gün</span>
             </div>
           </div>
-          {/* glow */}
-          <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-volt/10 blur-3xl" />
+          {/* glow — radial gradient (smoother than a blurred solid) */}
+          <div
+            className="absolute -inset-12 -z-10"
+            style={{ background: "radial-gradient(closest-side, rgba(214,251,60,0.13), transparent 72%)" }}
+          />
         </motion.div>
       </div>
     </section>

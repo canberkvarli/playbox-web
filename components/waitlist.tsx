@@ -43,7 +43,7 @@ export function Waitlist() {
           <span className="h-1.5 w-1.5 rounded-full bg-volt" />
           {w.kicker}
         </div>
-        <h2 className="font-display mt-6 text-6xl leading-[0.92] text-concrete sm:text-7xl md:text-8xl">
+        <h2 className="font-display mt-6 text-6xl leading-[1.0] text-concrete sm:text-7xl md:text-8xl">
           {w.title}
         </h2>
         <p className="mx-auto mt-6 max-w-md text-base text-muted md:text-lg">{w.sub}</p>

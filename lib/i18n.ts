@@ -62,9 +62,9 @@ export const dict = {
     sponsors: {
       kicker: "SPONSORLAR",
       title: "OYUNU GÜÇLENDİR.",
-      sub: "Markanı volt duvarına koy, oyunculara ücretsiz oyun saatleri hediye et. Herkes kazanır.",
+      sub: "Markanı sponsor duvarına koy, oyunculara ücretsiz oyun saatleri hediye et. Herkes kazanır.",
       benefits: [
-        { n: "01", t: "Volt duvarında yerini al", d: "Logon her istasyonda ve burada, genç ve aktif kitlenin tam önünde." },
+        { n: "01", t: "Sponsor duvarında yerini al", d: "Logon her istasyonda ve burada, genç ve aktif kitlenin tam önünde." },
         { n: "02", t: "Ücretsiz saat hediye et", d: "Desteğin oyunculara bedava oyun saatine dönüşür. Sahaya iyilik yap." },
         { n: "03", t: "Topluluğun parçası ol", d: "Mahallenin sporunu sen ayakta tut. Gerçek, yerel, görünür destek." },
       ],
@@ -171,9 +171,9 @@ export const dict = {
     sponsors: {
       kicker: "SPONSORS",
       title: "POWER THE PLAY.",
-      sub: "Put your brand on the volt wall, gift free play hours to players. Everybody wins.",
+      sub: "Put your brand on the sponsor wall, gift free play hours to players. Everybody wins.",
       benefits: [
-        { n: "01", t: "Claim the volt wall", d: "Your logo at every station and right here, in front of a young, active crowd." },
+        { n: "01", t: "Claim your spot on the wall", d: "Your logo at every station and right here, in front of a young, active crowd." },
         { n: "02", t: "Gift free hours", d: "Your support turns into free play time for players. Do the court a favor." },
         { n: "03", t: "Join the community", d: "Keep the neighborhood's sport alive. Real, local, visible support." },
       ],
