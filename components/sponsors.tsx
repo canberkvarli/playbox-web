@@ -41,52 +41,45 @@ export function Sponsors() {
   return (
     <section id="sponsors" className="relative border-y border-slate bg-card/30 py-28 md:py-44">
       <div className="mx-auto max-w-6xl px-6">
-        {/* pitch */}
-        <div className="max-w-3xl">
-          <Kicker>{s.kicker}</Kicker>
-          <h2 className="font-display mt-6 text-6xl leading-[1.02] text-concrete sm:text-7xl md:text-8xl">
-            {s.title}
-          </h2>
-          <p className="font-display mt-8 text-2xl leading-[1.15] text-volt sm:text-3xl">{s.lead}</p>
-          <p className="pretty mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">{s.sub}</p>
-        </div>
+        <div className="grid gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+          {/* pitch + benefits + wall */}
+          <div>
+            <Kicker>{s.kicker}</Kicker>
+            <h2 className="font-display mt-6 text-[clamp(2.5rem,10.5vw,6rem)] leading-[1.02] text-concrete">
+              {s.title}
+            </h2>
+            <p className="pretty mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg">{s.sub}</p>
 
-        {/* benefits */}
-        <div className="mt-16 md:mt-20">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">{s.benefitsTitle}</p>
-          <div className="mt-6 grid gap-px overflow-hidden rounded-3xl border border-slate bg-slate sm:grid-cols-2 lg:grid-cols-4">
-            {s.benefits.map((b, i) => (
-              <motion.div
-                key={b.n}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                className="flex min-h-[220px] flex-col gap-4 bg-asphalt p-7"
-              >
-                <span className="font-mono text-sm text-volt">{b.n}</span>
-                <h3 className="font-display text-xl uppercase leading-[1.1] text-concrete">{b.t}</h3>
-                <p className="mt-auto text-sm leading-relaxed text-muted">{b.d}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+            {/* benefit ledger */}
+            <div className="mt-14 border-t border-slate">
+              {s.benefits.map((b, i) => (
+                <motion.div
+                  key={b.n}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  className="group flex flex-wrap items-baseline gap-x-6 gap-y-1 border-b border-slate py-5"
+                >
+                  <span className="font-mono text-xs text-volt">{b.n}</span>
+                  <h3 className="font-display text-2xl uppercase leading-none text-concrete transition-colors group-hover:text-volt sm:text-3xl">
+                    {b.t}
+                  </h3>
+                  <p className="ml-auto text-sm text-muted sm:text-right">{b.d}</p>
+                </motion.div>
+              ))}
+            </div>
 
-        {/* closing + wall + form */}
-        <div className="mt-20 grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
-          <div className="flex flex-col justify-between gap-10">
-            <p className="font-display text-3xl leading-[1.05] text-concrete sm:text-4xl">{s.closing}</p>
-            <div>
+            {/* logo slots */}
+            <div className="mt-12">
               <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">{s.wallLabel}</p>
-              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div
                     key={i}
-                    className="flex aspect-[3/2] items-center justify-center rounded-2xl border border-dashed border-slate bg-card/40 transition-colors hover:border-volt/50"
+                    className="flex aspect-[4/3] items-center justify-center rounded-xl border border-dashed border-slate bg-card/40 transition-colors hover:border-volt/50"
                   >
-                    <span className="px-3 text-center font-mono text-[10px] uppercase leading-tight tracking-widest text-muted">
-                      {s.wallSoon}
-                    </span>
+                    <span className="font-mono text-xs text-muted">{String(i + 1).padStart(2, "0")}</span>
                   </div>
                 ))}
               </div>
@@ -94,6 +87,7 @@ export function Sponsors() {
           </div>
 
           {/* form */}
+          <div className="self-start lg:sticky lg:top-28">
           {done ? (
             <div className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-volt/40 bg-volt/10 p-10 text-center">
               <span className="text-4xl">⚡</span>
@@ -127,6 +121,7 @@ export function Sponsors() {
             </Magnetic>
           </form>
           )}
+          </div>
         </div>
       </div>
     </section>
