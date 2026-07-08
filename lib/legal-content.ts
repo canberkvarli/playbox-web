@@ -17,8 +17,8 @@ export type LegalDocKey = "kvkk" | "privacy" | "terms";
 
 export const CONTACT_EMAIL = "canberkvarli@gmail.com";
 
-// [KÖŞELİ PARANTEZ] içindeki alan (tam ticari unvan + adres) şirket kuruluşu
-// tamamlandığında güncellenmelidir.
+// "Veri sorumlusu / Data controller" satırlarındaki tam ticari unvan + adres,
+// şirket kuruluşu tamamlandığında güncellenmelidir.
 export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
   kvkk: {
     tr: {
@@ -30,7 +30,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
         {
           h: "1. Veri Sorumlusu",
           body: [
-            "Veri sorumlusu: Playbox Sport [tam ticari unvan ve adres, şirket kuruluşu tamamlandığında eklenecektir].",
+            "Veri sorumlusu: Playbox Sport (şirket kuruluşu aşamasındadır; tam ticari unvan ve adres, kuruluş tamamlandığında burada güncellenecektir).",
             `İletişim: ${CONTACT_EMAIL}`,
           ],
         },
@@ -114,7 +114,7 @@ export const legalDocs: Record<LegalDocKey, Record<Lang, LegalDoc>> = {
         {
           h: "1. Data Controller",
           body: [
-            "Data controller: Playbox Sport [full legal name and address to be added once incorporation is complete].",
+            "Data controller: Playbox Sport (incorporation in progress; the full legal name and registered address will be updated here once complete).",
             `Contact: ${CONTACT_EMAIL}`,
           ],
         },
