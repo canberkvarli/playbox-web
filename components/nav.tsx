@@ -7,6 +7,7 @@ import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useI18n } from "@/lib/i18n";
 import { Logo, Wordmark } from "@/components/logo";
 import { LangToggle } from "@/components/lang-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Magnetic } from "@/components/magnetic-button";
 
 export function Nav() {
@@ -57,6 +58,7 @@ export function Nav() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-2.5">
+          <ThemeToggle />
           <LangToggle />
           <div className="hidden sm:block">
             <Magnetic strength={0.4}>

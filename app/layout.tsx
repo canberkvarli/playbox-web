@@ -60,8 +60,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr" className={`${archivo.variable} ${inter.variable} ${jetbrains.variable}`}>
+    <html
+      lang="tr"
+      className={`${archivo.variable} ${inter.variable} ${jetbrains.variable}`}
+      suppressHydrationWarning
+    >
       <body className="grain bg-asphalt text-concrete antialiased">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("pb-theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`,
+          }}
+        />
         <I18nProvider>
           <LenisProvider>
             {children}
@@ -69,9 +78,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               position="bottom-center"
               toastOptions={{
                 style: {
-                  background: "#202127",
-                  color: "#f4f3ee",
-                  border: "1px solid #d6fb3c",
+                  background: "var(--color-card)",
+                  color: "var(--color-concrete)",
+                  border: "1px solid var(--color-volt)",
                   fontFamily: "var(--font-jetbrains)",
                   fontSize: "13px",
                   letterSpacing: "0.02em",
