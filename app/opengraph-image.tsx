@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Playbox · Bul. Aç. Oyna.";
+export const alt = "Playbox · Sahaya İn. Gerisi Bizde.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -27,12 +27,12 @@ export default async function OG() {
           <span style={{ fontSize: 22, letterSpacing: 8, color: "rgba(154,154,166,0.9)" }}>PLAYBOX · TÜRKİYE</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <span style={{ fontSize: 176, lineHeight: 0.9, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
-            BUL. AÇ.
+          <span style={{ fontSize: 112, lineHeight: 0.9, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" }}>
+            SAHAYA İN.
           </span>
           <span
             style={{
-              fontSize: 176,
+              fontSize: 112,
               lineHeight: 0.9,
               fontWeight: 900,
               letterSpacing: 2,
@@ -40,7 +40,7 @@ export default async function OG() {
               color: "#d6fb3c",
             }}
           >
-            OYNA.
+            GERİSİ BİZDE.
           </span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>

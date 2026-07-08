@@ -33,7 +33,7 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://playboxsport.com"),
   title: {
-    default: "Playbox · Bul. Aç. Oyna.",
+    default: "Playbox · Sahaya İn. Gerisi Bizde.",
     template: "%s · Playbox",
   },
   description:
@@ -44,16 +44,16 @@ export const metadata: Metadata = {
     languages: { "tr-TR": "/", "en-US": "/?lang=en" },
   },
   openGraph: {
-    title: "Playbox · Bul. Aç. Oyna.",
-    description: "Sahaların yanında akıllı spor istasyonları. Bul, aç, oyna.",
+    title: "Playbox · Sahaya İn. Gerisi Bizde.",
+    description: "Sahaların yanında akıllı spor istasyonları. Sahaya in, gerisi bizde.",
     type: "website",
     locale: "tr_TR",
     alternateLocale: ["en_US"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Playbox · Bul. Aç. Oyna.",
-    description: "Sahaların yanında akıllı spor istasyonları. Bul, aç, oyna.",
+    title: "Playbox · Sahaya İn. Gerisi Bizde.",
+    description: "Sahaların yanında akıllı spor istasyonları. Sahaya in, gerisi bizde.",
   },
   icons: { icon: "/favicon.ico" },
 };

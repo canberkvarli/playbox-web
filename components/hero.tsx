@@ -92,7 +92,7 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-[1500px] px-6 text-center">
-        <h1 className="font-display whitespace-nowrap text-[clamp(2.25rem,11.5vw,12rem)] leading-[1.08] text-concrete">
+        <h1 className="font-display whitespace-nowrap text-[clamp(1.9rem,7.8vw,9rem)] leading-[1.08] text-concrete">
           <span className="block">{chars(t.hero.title1)}</span>
           <span className="block">{chars(t.hero.title2, true)}</span>
         </h1>

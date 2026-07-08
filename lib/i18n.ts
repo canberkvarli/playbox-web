@@ -10,8 +10,8 @@ export const dict = {
     ticker: ["BASKETBOL", "FUTBOL", "TENİS", "VOLEYBOL", "BUL", "AÇ", "OYNA", "İADE ET", "SERİ YAP"],
     hero: {
       kicker: "PLAYBOX · TÜRKİYE",
-      title1: "BUL. AÇ.",
-      title2: "OYNA.",
+      title1: "SAHAYA İN.",
+      title2: "GERİSİ BİZDE.",
       sub: "Sahaların yanında akıllı spor istasyonları. En yakınını bul, telefonunla aç, ekipmanı kap, oyna. Ekipman derdi yok.",
       ctaApp: "UYGULAMAYI AL",
       ctaWaitlist: "BEKLEME LİSTESİ",
@@ -111,7 +111,7 @@ export const dict = {
       ],
     },
     footer: {
-      tag: "Sahaların yanında akıllı spor istasyonları. Bul, aç, oyna.",
+      tag: "Sahaların yanında akıllı spor istasyonları. Sahaya in, gerisi bizde.",
       city: "TÜRKİYE'YE GELİYOR · İSTANBUL İLK",
       contact: "İletişim",
       legal: "© 2026 Playbox Türkiye. Tüm hakları saklıdır.",
@@ -125,8 +125,8 @@ export const dict = {
     ticker: ["BASKETBALL", "FOOTBALL", "TENNIS", "VOLLEYBALL", "FIND", "OPEN", "PLAY", "RETURN", "STREAK"],
     hero: {
       kicker: "PLAYBOX · TÜRKİYE",
-      title1: "FIND. OPEN.",
-      title2: "PLAY.",
+      title1: "HIT THE COURT.",
+      title2: "GEAR'S ON US.",
       sub: "Smart sports stations right by the courts. Find the nearest one, open it with your phone, grab the gear, play. No gear to own.",
       ctaApp: "GET THE APP",
       ctaWaitlist: "JOIN WAITLIST",
@@ -226,7 +226,7 @@ export const dict = {
       ],
     },
     footer: {
-      tag: "Smart sports stations right by the courts. Find, open, play.",
+      tag: "Smart sports stations right by the courts. Hit the court, gear's on us.",
       city: "COMING TO TÜRKIYE · ISTANBUL FIRST",
       contact: "Contact",
       legal: "© 2026 Playbox Türkiye. All rights reserved.",
