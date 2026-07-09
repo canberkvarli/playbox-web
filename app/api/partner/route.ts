@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { Resend } from "resend";
+import { supabase } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 
@@ -46,55 +46,20 @@ export async function POST(req: Request) {
   }
 
   const { name, company, email, message } = parsed.data;
-  const inbox = (process.env.PARTNER_INBOX ?? "canberkvarli@gmail.com")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-  const apiKey = process.env.RESEND_API_KEY;
 
-  if (!apiKey) {
-    console.log("[sponsor-form] no RESEND_API_KEY. would have sent:", parsed.data);
+  if (!supabase) {
+    console.log("[sponsor-form] no Supabase config. would have stored:", parsed.data);
     return NextResponse.json({ ok: true, stubbed: true });
   }
 
-  const resend = new Resend(apiKey);
+  const { error } = await supabase
+    .from("sponsor_inquiries")
+    .insert({ name, company, email, message: message ?? null, ip });
 
-  try {
-    // MAIL_FROM must use a Resend-verified domain (e.g. actorrise.com) to deliver
-    // to arbitrary recipients. Switch to a playboxsport.com address once it's verified.
-    const { error } = await resend.emails.send({
-      from: process.env.MAIL_FROM ?? "Playbox <onboarding@resend.dev>",
-      to: inbox,
-      replyTo: email,
-      subject: `New sponsor inquiry — ${company} (${name})`,
-      html: `
-        <div style="font-family:'JetBrains Mono',-apple-system,monospace;background:#17181c;color:#f4f3ee;padding:32px;line-height:1.6">
-          <h2 style="color:#d6fb3c;margin:0 0 16px;font-family:sans-serif">New sponsor inquiry ⚡</h2>
-          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Company:</strong> ${escapeHtml(company)}</p>
-          <p><strong>Email:</strong> <a style="color:#d6fb3c" href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
-          ${message ? `<p><strong>Offer / message:</strong><br/>${escapeHtml(message).replace(/\n/g, "<br/>")}</p>` : ""}
-          <hr style="border:none;border-top:1px solid #2a2c33;margin:24px 0"/>
-          <p style="color:#9a9aa6;font-size:12px">Sent from playboxsport.com sponsors form</p>
-        </div>
-      `,
-    });
-    if (error) {
-      console.error("[sponsor-form] resend error", error);
-      return NextResponse.json({ error: "send_failed" }, { status: 500 });
-    }
-    return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("[sponsor-form] resend error", err);
-    return NextResponse.json({ error: "send_failed" }, { status: 500 });
+  if (error) {
+    console.error("[sponsor-form] supabase error", error);
+    return NextResponse.json({ error: "store_failed" }, { status: 500 });
   }
-}
 
-function escapeHtml(str: string) {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return NextResponse.json({ ok: true });
 }

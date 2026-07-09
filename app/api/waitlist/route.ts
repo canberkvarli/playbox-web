@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { Resend } from "resend";
+import { supabase } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 
@@ -41,52 +41,24 @@ export async function POST(req: Request) {
   }
 
   const { email } = parsed.data;
-  const inbox = (process.env.PARTNER_INBOX ?? "canberkvarli@gmail.com")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-  const apiKey = process.env.RESEND_API_KEY;
 
-  if (!apiKey) {
-    console.log("[waitlist] no RESEND_API_KEY. would have added:", email);
+  if (!supabase) {
+    console.log("[waitlist] no Supabase config. would have stored:", email);
     return NextResponse.json({ ok: true, stubbed: true });
   }
 
-  const resend = new Resend(apiKey);
+  // Plain insert (not upsert): the lead tables have no anon SELECT policy, and
+  // upsert's ON CONFLICT needs to see the existing row, so it trips RLS. Instead
+  // we let the unique(email) constraint reject repeats and treat 23505 (already
+  // on the list) as an idempotent success.
+  const { error } = await supabase
+    .from("waitlist_signups")
+    .insert({ email, ip, source: "web" });
 
-  try {
-    // MAIL_FROM must use a Resend-verified domain (e.g. actorrise.com) to deliver
-    // to arbitrary recipients. Switch to a playboxsport.com address once it's verified.
-    const { error } = await resend.emails.send({
-      from: process.env.MAIL_FROM ?? "Playbox <onboarding@resend.dev>",
-      to: inbox,
-      replyTo: email,
-      subject: `Waitlist signup: ${email}`,
-      html: `
-        <div style="font-family:-apple-system,Inter,sans-serif;color:#1a1f3a;line-height:1.6">
-          <h2 style="color:#e87527;margin:0 0 16px">New waitlist signup</h2>
-          <p><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
-          <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
-          <p style="color:#999;font-size:12px">Sent from playboxsport.com waitlist</p>
-        </div>
-      `,
-    });
-    if (error) {
-      console.error("[waitlist] resend error", error);
-      return NextResponse.json({ error: "send_failed" }, { status: 500 });
-    }
-    return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("[waitlist] resend error", err);
-    return NextResponse.json({ error: "send_failed" }, { status: 500 });
+  if (error && error.code !== "23505") {
+    console.error("[waitlist] supabase error", error);
+    return NextResponse.json({ error: "store_failed" }, { status: 500 });
   }
-}
 
-function escapeHtml(str: string) {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return NextResponse.json({ ok: true });
 }
